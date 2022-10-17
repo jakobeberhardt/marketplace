@@ -6,6 +6,16 @@
     sudo apt install openjdk-17-jdk-headless
     sudo update-alternatives --config java
 
+## Installation (MacOs)
+### JDK 17
+Download jdk 17 for Apple Silicon chip [here](https://download.oracle.com/java/17/archive/jdk-17.0.4.1_macos-aarch64_bin.tar.gz)
+
+Download jdk 17 for Intel chip [here](https://download.oracle.com/java/17/archive/jdk-17.0.4.1_macos-x64_bin.tar.gz)
+
+The directory for the jdk is: `/Users/yourUser/Library/Java/JavaVirtualMachines`
+
+To change the jdk version use following command: `export JAVA_HOME=$(/usr/libexec/java_home -v17)`
+
 
 ### IntelliJ Community [(Download)](https://www.jetbrains.com/idea/download/)
 
