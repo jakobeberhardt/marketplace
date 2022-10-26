@@ -1,7 +1,7 @@
 package de.neocargo.marketplace.entity
 
-enum class Scopes {
-    PICKUP,
-    ENROUTE,
-    DELIVERY,
+enum class Scopes(val type: String) {
+    PICKUP("PICKUP"),
+    ENROUTE("ENROUTE"),
+    DELIVERY("DELIVERY")
 }
