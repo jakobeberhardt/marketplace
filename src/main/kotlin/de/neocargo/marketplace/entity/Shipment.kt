@@ -32,5 +32,5 @@ data class Shipment(
     val totalVolume : Double? = 0.0,
     val totalLoadMeters : Double? = 0.0,
     val internalInfo : String?,
-    val requirements : ArrayList<Requirement> = ArrayList<Requirement>(),
+    val requirements : Requirement,
 )
