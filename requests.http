@@ -1,0 +1,224 @@
+POST http://localhost:8080
+Content-Type: application/json
+
+{
+  "id": 1,
+  "tmsReference": "test",
+  "position": 1,
+  "label": "test",
+  "pickup": {
+    "station": {
+      "id": 1,
+      "tmsReference": "test",
+      "name": "test",
+      "address": {
+        "name": "test",
+        "building": "test",
+        "gate": "test",
+        "street": "test",
+        "zipcode": "test",
+        "city": "test",
+        "country": "test"
+      },
+      "gpsCoords": {
+        "latitude": 1.1,
+        "longitude": 1.1
+      },
+      "customer": {
+        "id": 1,
+        "name": "test",
+        "tmsReference": "test",
+        "vatId": "test",
+        "address": {
+          "name": "test",
+          "street": "test",
+          "zipcode": "test",
+          "city": "test",
+          "country": "test"
+        },
+        "mainContact": {
+          "id": 1,
+          "tmsReference": "test",
+          "customerId": 1,
+          "name": "test",
+          "phone": "test",
+          "mail": "test"
+        }
+      }
+    },
+    "contact": "test",
+    "plannedServiceDuration": 1,
+    "avis": [
+      {
+        "triggerType": "FIXED_DATETIME",
+        "avisType": "PHONE",
+        "triggerOffset": "test",
+        "recipient": "test"
+      },
+      {
+        "triggerType": "ARRIVAL_OFFSET",
+        "avisType": "SMS",
+        "triggerOffset": "test",
+        "recipient": "test"
+      }
+    ],
+    "allowedTimeWindows": [
+      {
+        "startTime": "2023-04-23T09:25:43.511Z",
+        "endTime": "2023-04-23T18:25:43.511Z"
+      },
+      {
+        "startTime": "2023-05-23T09:25:43.511Z",
+        "endTime": "2023-05-23T18:25:43.511Z"
+      }
+    ],
+    "timeWindowBookingUrl": "test"
+  },
+  "pickupReference": "test",
+  "delivery": {
+    "station": {
+      "id": 1,
+      "tmsReference": "test",
+      "name": "test",
+      "address": {
+        "name": "test",
+        "building": "test",
+        "gate": "test",
+        "street": "test",
+        "zipcode": "test",
+        "city": "test",
+        "country": "test"
+      },
+      "gpsCoords": {
+        "latitude": 1.1,
+        "longitude": 1.1
+      },
+      "customer": {
+        "id": 1,
+        "name": "test",
+        "tmsReference": "test",
+        "vatId": "test",
+        "address": {
+          "name": "test",
+          "street": "test",
+          "zipcode": "test",
+          "city": "test",
+          "country": "test"
+        },
+        "mainContact": {
+          "id": 1,
+          "tmsReference": "test",
+          "customerId": 1,
+          "name": "test",
+          "phone": "test",
+          "mail": "test"
+        }
+      }
+    },
+    "contact": "test",
+    "plannedServiceDuration": 1,
+    "avis": [
+      {
+        "triggerType": "FIXED_DATETIME",
+        "avisType": "PHONE",
+        "triggerOffset": "test",
+        "recipient": "test"
+      },
+      {
+        "triggerType": "ARRIVAL_OFFSET",
+        "avisType": "SMS",
+        "triggerOffset": "test",
+        "recipient": "test"
+      }
+    ],
+    "allowedTimeWindows": [
+      {
+        "startTime": "2023-04-23T09:25:43.511Z",
+        "endTime": "2023-04-23T18:25:43.511Z"
+      },
+      {
+        "startTime": "2023-05-23T09:25:43.511Z",
+        "endTime": "2023-05-23T18:25:43.511Z"
+      }
+    ],
+    "timeWindowBookingUrl": "test"
+  },
+  "deliveryReference": "test",
+  "totalItemCount": 1,
+  "totalWeight": 100.5,
+  "totalVolume": 50.5,
+  "totalLoadMeters": 13.6,
+  "internalInfo": "test",
+  "requirements": {
+    "boxTrailer": {
+      "scopes": "PICKUP"
+    },
+    "cleanedVehicle": {
+      "scopes": "ENROUTE"
+    },
+    "craneLoadable": {
+      "scopes": "DELIVERY"
+    },
+    "emptyVehicle": {
+      "scopes": "PICKUP"
+    },
+    "fireExtinguish": {
+      "scopes": "DELIVERY"
+    },
+    "foodstuffs": {
+      "scopes": "ENROUTE"
+    },
+    "healthCert": {
+      "scopes": "ENROUTE"
+    },
+    "keepDry": {
+      "scopes": "PICKUP"
+    },
+    "loadHeight": {
+      "scopes": "PICKUP",
+      "params": "test"
+    },
+    "loadLength": {
+      "scopes": "DELIVERY",
+      "params": "test"
+    },
+    "loadWidth": {
+      "scopes": "ENROUTE",
+      "params": "test"
+    },
+    "mobileForklift": {
+      "scopes": "DELIVERY"
+    },
+    "palletSwap": {
+      "scopes": "DELIVERY"
+    },
+    "ppeFfp2Mask": {
+      "scopes": "ENROUTE"
+    },
+    "ppeHelmet": {
+      "scopes": "DELIVERY"
+    },
+    "ppeShoes": {
+      "scopes": "PICKUP"
+    },
+    "ppeVest": {
+      "scopes": "ENROUTE"
+    },
+    "sideLoadable": {
+      "scopes": "DELIVERY"
+    },
+    "tailLift": {
+      "scopes": "PICKUP"
+    },
+    "trackingLevel": {
+      "scopes": "ENROUTE",
+      "params": "test"
+    },
+    "wasteSign": {
+      "scopes": "PICKUP"
+    },
+    "whitelabelVehicle":{
+      "scopes": "ENROUTE"
+    }
+  }
+}
