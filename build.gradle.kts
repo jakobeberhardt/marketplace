@@ -18,8 +18,13 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.4")
+    implementation("org.springframework.data:spring-data-mongodb:3.1.1")
+	implementation("org.springframework:spring-web:5.3.23")
+	implementation("org.springframework.boot:spring-boot-starter-web:2.7.5")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

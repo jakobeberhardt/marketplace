@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+
+    db-marketplace:
+        image: "mongo:latest"
+        container_name: "mongodb0"
+        restart: "unless-stopped"
+        ports:
+            - "27017:27017"
