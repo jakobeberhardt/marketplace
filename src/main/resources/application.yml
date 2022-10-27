@@ -1,0 +1,12 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+  shutdown: graceful
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: biddings
