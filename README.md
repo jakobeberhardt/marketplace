@@ -1,6 +1,7 @@
 # marketplace
 ## Content
 - [Installation](#installation-ubuntu)
+- [Deployment](#deployment)
 ## Installation (Ubuntu)
 ### JDK 17
     sudo apt install openjdk-17-jdk-headless
@@ -21,3 +22,23 @@ To change the jdk version use following command: `export JAVA_HOME=$(/usr/libexe
 
 * _Get from VCS_ > _Enter GitHub [URL](https://github.com/jakobeberhardt/marketplace)_ 
 * _Toggle  src/main/kotlin/de/neocargo/marketplace/MarketplaceApplication.kt_  >  _Run 'MarketplaceApplication.kt'_
+
+## Deployment
+Start deployment (MongoDB)
+
+    cd docker
+    docker-compose up -d
+
+Start application on port 8080
+
+    ./gradlew bootRun
+
+Stops deployment
+    
+    cd docker
+    docker-compose stop
+
+Remove deployment
+
+    cd docker 
+    docker-compose down
