@@ -2,9 +2,18 @@ version: "3.7"
 
 services:
 
-    db-marketplace:
-        image: "mongo:latest"
-        container_name: "mongodb0"
+    marketplace-backend:
+        image: "marketplace-backend:latest"
+        container_name: "marketplace-backend"
         restart: "unless-stopped"
         ports:
-            - "27017:27017"
+            - "127.0.0.1:8080:8080"
+        depends_on:
+            - "marketplace-db"
+
+    marketplace-db:
+        image: "mongo:latest"
+        container_name: "marketplace-db"
+        restart: "unless-stopped"
+        ports:
+            - "127.0.0.1:27017:27017"

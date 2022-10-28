@@ -7,6 +7,6 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: marketplace-db
       port: 27017
       database: biddings
