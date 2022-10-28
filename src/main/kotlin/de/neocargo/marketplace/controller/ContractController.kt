@@ -5,6 +5,7 @@ import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.repository.ContractRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -24,5 +25,11 @@ class ContractController(
             )
         )
         return ResponseEntity(contract, HttpStatus.CREATED)
+    }
+
+    @GetMapping
+    fun getAllContracts(): ResponseEntity<List<Contract>> {
+        val contracts = contractRepository.findAll()
+        return ResponseEntity.ok(contracts)
     }
 }

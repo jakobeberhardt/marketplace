@@ -4,3 +4,5 @@ Content-Type: application/json
 < ./shipment.json
 
 ###
+
+GET http://localhost:8080/contracts
