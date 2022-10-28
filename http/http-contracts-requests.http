@@ -1,0 +1,6 @@
+POST http://localhost:8080/contracts
+Content-Type: application/json
+
+< ./shipment.json
+
+###

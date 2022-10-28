@@ -1,6 +1,0 @@
-POST http://localhost:8080/biddings
-Content-Type: application/json
-
-< ./bidding.json
-
-###

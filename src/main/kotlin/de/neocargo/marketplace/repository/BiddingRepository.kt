@@ -1,6 +1,6 @@
 package de.neocargo.marketplace.repository
 
-import de.neocargo.marketplace.entity.Bidding
+import de.neocargo.marketplace.entity.Contract
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface BiddingRepository : MongoRepository<Bidding, Long>
+interface ContractRepository : MongoRepository<Contract, Long>

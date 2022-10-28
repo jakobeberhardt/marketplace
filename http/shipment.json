@@ -1,5 +1,5 @@
 {
-    "id": 1,
+    "userId": 1,
     "shipment": {
         "id": 1,
         "tmsReference": "test",
