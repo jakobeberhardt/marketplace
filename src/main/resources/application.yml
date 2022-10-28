@@ -7,6 +7,6 @@ server:
 spring:
   data:
     mongodb:
-      host: marketplace-db
+      host: localhost
       port: 27017
-      database: biddings
+      database: neocargo-marketplace
