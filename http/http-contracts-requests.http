@@ -6,3 +6,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8080/contracts
+
+###
+
+GET http://localhost:8080/contracts/user/1
