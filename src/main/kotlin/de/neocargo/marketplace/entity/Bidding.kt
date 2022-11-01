@@ -10,7 +10,7 @@ import java.util.UUID
         "id",
         "shipment",
 )
-@Document(collection = "contracts")
+@Document(collection = "biddings")
 data class Contract (
         @Id
         val id : String = UUID.randomUUID().toString(),

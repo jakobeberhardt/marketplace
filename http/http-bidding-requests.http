@@ -5,8 +5,8 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/contracts
+GET http://localhost:8080/biddings
 
 ###
 
-GET http://localhost:8080/contracts/user/1
+GET http://localhost:8080/biddings/user/1
