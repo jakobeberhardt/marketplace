@@ -14,7 +14,7 @@ import java.util.UUID
 @Document(collection = "biddings")
 data class Bidding(
     @Id
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = "00000000-0000-0000-0000-000000000001",
     val userId: Long = 1,
     val shipment: Shipment,
     var bids: ArrayList<Bid> = arrayListOf(),
