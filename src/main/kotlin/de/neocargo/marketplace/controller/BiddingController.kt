@@ -2,42 +2,44 @@ package de.neocargo.marketplace.controller
 
 import de.neocargo.marketplace.entity.Bidding
 import de.neocargo.marketplace.entity.Shipment
-import de.neocargo.marketplace.repository.ContractRepository
+import de.neocargo.marketplace.repository.BiddingRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/biddings")
-class ContractController(
-    private val contractRepository: ContractRepository
+class BiddingController(
+    private val biddingRepository: BiddingRepository
 ) {
     @PostMapping
-    fun createContract(@RequestBody request: Shipment): ResponseEntity<Bidding> {
-        val contract = contractRepository.save(
+    fun createBidding(@RequestBody request: Shipment): ResponseEntity<Bidding> {
+        val bidding = biddingRepository.save(
             Bidding(
-                userId = request.userId,
-                shipment = request.shipment
+                // to be updated once userId is transferred in ShipmentTO
+                // userId = request.userId,
+                // shipment = request.shipment
+                shipment = request
             )
         )
-        return ResponseEntity(contract, HttpStatus.CREATED)
+        return ResponseEntity(bidding, HttpStatus.CREATED)
     }
 
     @GetMapping
-    fun getAllContracts(): ResponseEntity<List<Bidding>> {
-        val contracts = contractRepository.findAll()
-        return ResponseEntity.ok(contracts)
+    fun getAllBiddings(): ResponseEntity<List<Bidding>> {
+        val biddings = biddingRepository.findAll()
+        return ResponseEntity(biddings, HttpStatus.ACCEPTED)
     }
 
     @GetMapping("/{id}")
-    fun findContractById(@PathVariable("id")id : String): ResponseEntity<Bidding> {
-        val contract = contractRepository.findByContractId(id)
-        return ResponseEntity.ok(contract)
+    fun findBiddingById(@PathVariable("id")id : String): ResponseEntity<Bidding> {
+        val bidding = biddingRepository.findByBiddingId(id)
+        return ResponseEntity(bidding, HttpStatus.ACCEPTED)
     }
 
     @GetMapping("/user/{userId}")
-    fun findAllContractsByUserId(@PathVariable("userId")userId : Long): ResponseEntity<List<Bidding>> {
-        val contracts = contractRepository.findAllByUserId(userId)
-        return ResponseEntity.ok(contracts)
+    fun findAllBiddingsByUserId(@PathVariable("userId")userId : Long): ResponseEntity<List<Bidding>> {
+        val biddings = biddingRepository.findAllBiddingsByUserId(userId)
+        return ResponseEntity(biddings, HttpStatus.ACCEPTED)
     }
 }

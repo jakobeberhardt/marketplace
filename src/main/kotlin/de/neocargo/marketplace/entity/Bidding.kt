@@ -8,12 +8,15 @@ import java.util.UUID
 
 @JsonPropertyOrder(
         "id",
+        "userId",
         "shipment",
+        "bids",
 )
 @Document(collection = "biddings")
-data class Contract (
+data class Bidding (
         @Id
         val id : String = UUID.randomUUID().toString(),
-        val userId : Long,
-        val shipment : ShipmentTO,
+        val userId : Long = 1,
+        val shipment : Shipment,
+        var bids : ArrayList<Bid> = arrayListOf(),
 )

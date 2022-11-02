@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
     "internalInfo",
     "requirements",
 )
-data class ShipmentTO(
+data class Shipment(
     val id : Long,
     val tmsReference : String?,
     val position : Int,

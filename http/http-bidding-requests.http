@@ -1,4 +1,4 @@
-POST http://localhost:8080/contracts
+POST http://localhost:8080/biddings
 Content-Type: application/json
 
 < ./shipment.json
