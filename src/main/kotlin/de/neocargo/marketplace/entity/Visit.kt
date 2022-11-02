@@ -1,5 +1,15 @@
 package de.neocargo.marketplace.entity
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
+
+@JsonPropertyOrder(
+    "station",
+    "contact",
+    "plannedServiceDuration",
+    "avis",
+    "allowedTimeWindows",
+    "timeWindowBookingUrl",
+)
 data class Visit(
     val station: Station,
     val contact: String,
