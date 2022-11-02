@@ -1,5 +1,31 @@
 package de.neocargo.marketplace.entity
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
+
+@JsonPropertyOrder(
+    "boxTrailer",
+    "cleanedVehicle",
+    "craneLoadable",
+    "emptyVehicle",
+    "fireExtinguisher",
+    "foodstuffs",
+    "healthCert",
+    "keepDry",
+    "loadHeight",
+    "loadLength",
+    "loadWidth",
+    "mobileForklift",
+    "palletSwap",
+    "ppeFfp2Mask",
+    "ppeHelmet",
+    "ppeShoes",
+    "ppeVest",
+    "sideLoadable",
+    "tailLift",
+    "trackingLevel",
+    "wasteSign",
+    "whitelabelVehicle",
+)
 data class Requirement(
     val boxTrailer: BooleanRequirement?,
     val cleanedVehicle: BooleanRequirement?,
