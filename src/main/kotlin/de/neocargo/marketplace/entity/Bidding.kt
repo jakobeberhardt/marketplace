@@ -5,18 +5,17 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.util.UUID
 
-
 @JsonPropertyOrder(
-        "id",
-        "userId",
-        "shipment",
-        "bids",
+    "id",
+    "userId",
+    "shipment",
+    "bids",
 )
 @Document(collection = "biddings")
-data class Bidding (
-        @Id
-        val id : String = UUID.randomUUID().toString(),
-        val userId : Long = 1,
-        val shipment : Shipment,
-        var bids : ArrayList<Bid> = arrayListOf(),
+data class Bidding(
+    @Id
+    val id: String = UUID.randomUUID().toString(),
+    val userId: Long = 1,
+    val shipment: Shipment,
+    var bids: ArrayList<Bid> = arrayListOf(),
 )
