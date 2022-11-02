@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@CrossOrigin()
+@CrossOrigin
 @RequestMapping("/contracts")
 class ContractController(
     private val contractRepository: ContractRepository
