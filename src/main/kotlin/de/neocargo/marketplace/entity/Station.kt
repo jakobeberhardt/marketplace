@@ -1,5 +1,16 @@
 package de.neocargo.marketplace.entity
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
+
+@JsonPropertyOrder(
+    "id",
+    "tmsReference",
+    "name",
+    "address",
+    "gpsCoords",
+    "customer",
+    "mainContact",
+)
 data class Station(
     val id: Long,
     val tmsReference: String?,
