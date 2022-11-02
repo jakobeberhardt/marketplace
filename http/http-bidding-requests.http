@@ -1,0 +1,12 @@
+POST http://localhost:8080/biddings
+Content-Type: application/json
+
+< ./shipment.json
+
+###
+
+GET http://localhost:8080/biddings
+
+###
+
+GET http://localhost:8080/biddings/user/1
