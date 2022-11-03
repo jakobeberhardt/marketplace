@@ -34,7 +34,8 @@ class BiddingController(
         )
 
         val responseEntity = ResponseEntity(bidding, HttpStatus.CREATED)
-        logger.info(responseEntity.toString())
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
         return responseEntity
     }
 
@@ -42,7 +43,8 @@ class BiddingController(
     fun getAllBiddings(): ResponseEntity<List<Bidding>> {
         val biddings = biddingRepository.findAll()
         val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
-        logger.info(responseEntity.toString())
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
         return responseEntity
     }
 
@@ -50,7 +52,8 @@ class BiddingController(
     fun findBiddingById(@PathVariable("id")id: String): ResponseEntity<Bidding> {
         val bidding = biddingRepository.findByBiddingId(id)
         val responseEntity = ResponseEntity(bidding, HttpStatus.OK)
-        logger.info(responseEntity.toString())
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
         return responseEntity
     }
 
@@ -58,7 +61,8 @@ class BiddingController(
     fun findAllBiddingsByUserId(@PathVariable("userId")userId: Long): ResponseEntity<List<Bidding>> {
         val biddings = biddingRepository.findAllBiddingsByUserId(userId)
         val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
-        logger.info(responseEntity.toString())
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
         return responseEntity
     }
 }
