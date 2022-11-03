@@ -41,7 +41,7 @@ class BiddingController(
     @GetMapping
     fun getAllBiddings(): ResponseEntity<List<Bidding>> {
         val biddings = biddingRepository.findAll()
-        val responseEntity = ResponseEntity(biddings, HttpStatus.ACCEPTED)
+        val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
         logger.info(responseEntity.toString())
         return responseEntity
     }
@@ -49,7 +49,7 @@ class BiddingController(
     @GetMapping("/{id}")
     fun findBiddingById(@PathVariable("id")id: String): ResponseEntity<Bidding> {
         val bidding = biddingRepository.findByBiddingId(id)
-        val responseEntity = ResponseEntity(bidding, HttpStatus.ACCEPTED)
+        val responseEntity = ResponseEntity(bidding, HttpStatus.OK)
         logger.info(responseEntity.toString())
         return responseEntity
     }
@@ -57,7 +57,7 @@ class BiddingController(
     @GetMapping("/user/{userId}")
     fun findAllBiddingsByUserId(@PathVariable("userId")userId: Long): ResponseEntity<List<Bidding>> {
         val biddings = biddingRepository.findAllBiddingsByUserId(userId)
-        val responseEntity = ResponseEntity(biddings, HttpStatus.ACCEPTED)
+        val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
         logger.info(responseEntity.toString())
         return responseEntity
     }
