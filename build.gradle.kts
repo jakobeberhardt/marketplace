@@ -27,6 +27,8 @@ dependencies {
     implementation("org.springframework:spring-web:5.3.23")
     implementation("org.springframework.boot:spring-boot-starter-web:2.7.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.3")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
