@@ -1,55 +1,55 @@
 {
     "id": 1,
-    "tmsReference": "test",
+    "tmsReference": "LKW Convoy",
     "position": 1,
-    "label": "test",
+    "label": "Sperrgut",
     "pickup": {
         "station": {
-            "id": 1,
-            "tmsReference": "test",
-            "name": "test",
+            "id": 17,
+            "tmsReference": "PIK_70528130",
+            "name": "DHL Zentrale Bielefeld",
             "address": {
-                "name": "test",
-                "building": "test",
-                "gate": "test",
-                "street": "test",
-                "zipcode": "test",
-                "city": "test",
-                "country": "test"
+                "name": "DHL Zentrale Bielefeld",
+                "building": "Gebaeude A",
+                "gate": "2c",
+                "street": "Transportwegstrasse",
+                "zipcode": "33611",
+                "city": "Bielefeld",
+                "country": "DE"
             },
             "gpsCoords": {
-                "latidute": 0.0,
-                "longtidude": 0.0
+                "latitude": 52.1,
+                "longitude": 8.32
             },
             "customer": {
                 "id": 1,
-                "name": "test",
-                "tmsReference": "test",
-                "vatId": "test",
+                "name": "NeoCargo AG",
+                "tmsReference": "MYTMSREF12345",
+                "vatId": "DE350124553",
                 "address": {
-                    "name": "test",
-                    "street": "test",
-                    "zipcode": "test",
-                    "city": "test",
-                    "country": "test"
+                    "name": "NeoCargo",
+                    "street": "Haid-und-Neu-Strasse 28",
+                    "zipcode": "76131",
+                    "city": "Karlsruhe",
+                    "country": "DE"
                 }
             },
             "mainContact": null
         },
-        "contact": "test",
-        "plannedServiceDuration": 1,
+        "contact": "Muserkontakt",
+        "plannedServiceDuration": 60,
         "avis": [
             {
                 "triggerType": "FIXED_DATETIME",
-                "avisType": "PHONE",
-                "triggerOffset": "test",
-                "recipient": "test"
+                "avisType": "MAIL",
+                "triggerOffset": "50",
+                "recipient": "max.mustermann@mail.de"
             },
             {
                 "triggerType": "ARRIVAL_OFFSET",
-                "avisType": "SMS",
-                "triggerOffset": "test",
-                "recipient": "test"
+                "avisType": "MAIL",
+                "triggerOffset": "70",
+                "recipient": "john.doe@mail.com"
             }
         ],
         "allowedTimeWindows": [
@@ -62,56 +62,56 @@
                 "endTime": "2023-05-23T18:25:43.511+00:00"
             }
         ],
-        "timeWindowBookingUrl": "test"
+        "timeWindowBookingUrl": "booking.transport.dhl.de"
     },
-    "pickupReference": "test",
+    "pickupReference": "XYZ-987654321",
     "delivery": {
         "station": {
             "id": 1,
-            "tmsReference": "test",
-            "name": "test",
+            "tmsReference": "DEL_52180246",
+            "name": "DHL Zentrale Berlin",
             "address": {
-                "name": "test",
-                "building": "test",
-                "gate": "test",
-                "street": "test",
-                "zipcode": "test",
-                "city": "test",
-                "country": "test"
+                "name": "Deutsche Post DHL Group Zustellbasis",
+                "building": "Building 5a",
+                "gate": "Gate 1",
+                "street": "Josef-Orlopp-Straße 90",
+                "zipcode": "10115",
+                "city": "Berlin",
+                "country": "DE"
             },
             "gpsCoords": {
-                "latidute": 0.0,
-                "longtidude": 0.0
+                "latidute": 53.0,
+                "longtidude": 13.0
             },
             "customer": {
                 "id": 1,
-                "name": "test",
-                "tmsReference": "test",
-                "vatId": "test",
+                "name": "DHL Paket GmbH",
+                "tmsReference": "MYTMSREF47348",
+                "vatId": "DE35012231",
                 "address": {
-                    "name": "test",
-                    "street": "test",
-                    "zipcode": "test",
-                    "city": "test",
-                    "country": "test"
+                    "name": "DHL Zentrale",
+                    "street": "Straesschenweg 10",
+                    "zipcode": "53111",
+                    "city": "Bonn",
+                    "country": "DE"
                 }
             },
             "mainContact": null
         },
-        "contact": "test",
-        "plannedServiceDuration": 1,
+        "contact": "Musterkontakt",
+        "plannedServiceDuration": 50,
         "avis": [
             {
                 "triggerType": "FIXED_DATETIME",
                 "avisType": "PHONE",
-                "triggerOffset": "test",
-                "recipient": "test"
+                "triggerOffset": "40",
+                "recipient": "07823/327823"
             },
             {
                 "triggerType": "ARRIVAL_OFFSET",
                 "avisType": "SMS",
                 "triggerOffset": "test",
-                "recipient": "test"
+                "recipient": "0176/2372838"
             }
         ],
         "allowedTimeWindows": [
@@ -124,14 +124,14 @@
                 "endTime": "2023-05-23T18:25:43.511+00:00"
             }
         ],
-        "timeWindowBookingUrl": "test"
+        "timeWindowBookingUrl": "booking.transport.dhl.de"
     },
-    "deliveryReference": "test",
-    "totalItemCount": 1,
+    "deliveryReference": "ABC-123234569",
+    "totalItemCount": 17,
     "totalWeight": 100.5,
     "totalVolume": 50.5,
     "totalLoadMeters": 13.6,
-    "internalInfo": "test",
+    "internalInfo": "Please dont send Mr Mueller",
     "requirements": {
         "boxTrailer": {
             "scopes": "PICKUP"
