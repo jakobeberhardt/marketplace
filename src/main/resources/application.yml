@@ -1,3 +1,10 @@
+access-token:
+  private: ${ACCESS_TOKEN_PRIVATE_KEY_PATH}
+  public: ${ACCESS_TOKEN_PUBLIC_KEY_PATH}
+refresh-token:
+  private: ${REFRESH_TOKEN_PRIVATE_KEY_PATH}
+  public: ${REFRESH_TOKEN_PUBLIC_KEY_PATH}
+
 server:
   port: 8080
   compression:
@@ -5,8 +12,13 @@ server:
   shutdown: graceful
 
 spring:
+  profiles:
+    active: dev
   data:
     mongodb:
       host: localhost
       port: 27017
       database: neocargo-marketplace
+  logging:
+    level:
+      org.springframework.security: DEBUG

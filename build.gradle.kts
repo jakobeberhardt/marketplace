@@ -31,6 +31,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.7.5")
+    // To be removed once all code is translated to Kotlin
+    compileOnly("org.projectlombok:lombok:1.18.24")
 }
 
 tasks.withType<KotlinCompile> {

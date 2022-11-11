@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger { }
 
 @RestController
 @CrossOrigin
-@RequestMapping("/biddings")
+@RequestMapping("/api/biddings")
 class BiddingController(
     private val biddingRepository: BiddingRepository
 ) {
@@ -48,7 +48,7 @@ class BiddingController(
         return responseEntity
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/{id}")
     fun findBiddingById(@PathVariable("id")id: String): ResponseEntity<Bidding> {
         val bidding = biddingRepository.findByBiddingId(id)
         val responseEntity = ResponseEntity(bidding, HttpStatus.OK)
@@ -57,7 +57,7 @@ class BiddingController(
         return responseEntity
     }
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/api/user/{userId}")
     fun findAllBiddingsByUserId(@PathVariable("userId")userId: Long): ResponseEntity<List<Bidding>> {
         val biddings = biddingRepository.findAllBiddingsByUserId(userId)
         val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
