@@ -16,14 +16,12 @@ class UserManager (
     @Autowired
     val passwordEncoder: PasswordEncoder
 ) : UserDetailsManager {
-
-    // TODO: Fix Casting from User to org.springframework.security.core.userdetails.User in entity User and frontend implementation
     override fun createUser(user: UserDetails) {
-        (user as User).password = passwordEncoder.encode(user.password)
-        userRepository.save(user as org.springframework.security.core.userdetails.User)
+        (user as User).setPassword(passwordEncoder.encode(user.password))
+        userRepository.save(user)
     }
 
-    // TODO: Supressed for now
+    // TODO: Suppressed for now
     override fun updateUser(user: UserDetails) {}
     override fun deleteUser(username: String) {}
     override fun changePassword(oldPassword: String, newPassword: String) {}
@@ -40,6 +38,4 @@ class UserManager (
     override fun loadUserByUsername(username: String): UserDetails? {
         return userRepository.findByUsername(username)
     }
-
-
 }

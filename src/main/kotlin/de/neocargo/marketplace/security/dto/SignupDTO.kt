@@ -1,4 +1,4 @@
-package de.neocargo.marketplace.dto
+package de.neocargo.marketplace.security.dto
 
 data class SignupDTO (
     val username: String,

@@ -1,6 +1,6 @@
 package de.neocargo.marketplace.security
 
-import de.neocargo.marketplace.dto.TokenDTO
+import de.neocargo.marketplace.security.dto.TokenDTO
 import de.neocargo.marketplace.entity.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -60,5 +60,4 @@ class TokenGenerator {
 
         return tokenDTO;
     }
-
 }

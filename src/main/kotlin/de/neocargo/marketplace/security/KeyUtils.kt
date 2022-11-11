@@ -1,6 +1,5 @@
 package de.neocargo.marketplace.security
 
-import lombok.extern.slf4j.Slf4j
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -22,7 +21,6 @@ import java.util.*
 private val logger = KotlinLogging.logger { }
 
 @Component
-@Slf4j
 class KeyUtils (
     @Autowired
     var environment: Environment,

@@ -1,8 +1,8 @@
 package de.neocargo.marketplace.controller
 
-import de.neocargo.marketplace.dto.LoginDTO
-import de.neocargo.marketplace.dto.SignupDTO
-import de.neocargo.marketplace.dto.TokenDTO
+import de.neocargo.marketplace.security.dto.LoginDTO
+import de.neocargo.marketplace.security.dto.SignupDTO
+import de.neocargo.marketplace.security.dto.TokenDTO
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.security.TokenGenerator
 import org.springframework.beans.factory.annotation.Autowired

@@ -4,8 +4,7 @@ import org.springframework.security.core.userdetails.User
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 
-interface UserRepository : MongoRepository<User, Long>{
-
+interface UserRepository : MongoRepository<de.neocargo.marketplace.entity.User, Long>{
     @Query("{ 'id' : ?0 }")
     fun findById(id: String): User
 

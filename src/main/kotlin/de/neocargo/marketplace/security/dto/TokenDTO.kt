@@ -1,4 +1,4 @@
-package de.neocargo.marketplace.dto
+package de.neocargo.marketplace.security.dto
 
 class TokenDTO (
     val userId: String?,

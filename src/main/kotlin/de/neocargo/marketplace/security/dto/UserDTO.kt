@@ -1,11 +1,7 @@
-package de.neocargo.marketplace.dto
+package de.neocargo.marketplace.security.dto
 
 import de.neocargo.marketplace.entity.User
-import lombok.Builder
-import lombok.Data
 
-@Builder
-@Data
 data class UserDTO (
     val id: String,
     val username: String,
