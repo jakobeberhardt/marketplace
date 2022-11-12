@@ -7,6 +7,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
     "longtidude",
 )
 data class GpsCoordinates(
-    val latidute: Double,
-    val longtidude: Double,
+    val latitude : Double,
+    val longitude : Double,
 )
