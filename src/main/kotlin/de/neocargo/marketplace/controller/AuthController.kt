@@ -1,5 +1,6 @@
 package de.neocargo.marketplace.controller
 
+import de.neocargo.marketplace.config.Router
 import de.neocargo.marketplace.security.dto.LoginDTO
 import de.neocargo.marketplace.security.dto.SignupDTO
 import de.neocargo.marketplace.security.dto.TokenDTO
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("${Router.API_PATH}/auth")
 class AuthController(
     @Autowired
     private val userDetailsManager: UserDetailsManager,

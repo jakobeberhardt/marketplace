@@ -6,6 +6,7 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet
 import com.nimbusds.jose.jwk.source.JWKSource
 import com.nimbusds.jose.proc.SecurityContext
+import de.neocargo.marketplace.config.Router
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
@@ -54,7 +55,7 @@ class WebSecurity (
             .authorizeHttpRequests(
                 Customizer { authorize ->
                     authorize
-                        .antMatchers("/api/auth/*").permitAll()
+                        .antMatchers("${Router.API_PATH}/auth/*").permitAll()
                         .anyRequest().authenticated()
                 }
             )

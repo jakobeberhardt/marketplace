@@ -28,7 +28,7 @@ data class Bidding(
         type = "Long",
         minimum = "0",
     )
-    val userId: Long = 1,
+    val userId: String,
     @field:Schema(
         description = "Shipment",
         type = "Shipment",

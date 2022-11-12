@@ -9,5 +9,5 @@ interface BiddingRepository : MongoRepository<Bidding, Long> {
     fun findByBiddingId(id: String): Bidding?
 
     @Query("{ 'userId' : ?0 }")
-    fun findAllBiddingsByUserId(id: Long): List<Bidding>?
+    fun findAllBiddingsByUserId(userId: String): List<Bidding>?
 }
