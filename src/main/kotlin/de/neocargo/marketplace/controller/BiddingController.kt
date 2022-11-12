@@ -1,11 +1,15 @@
 package de.neocargo.marketplace.controller
 
+import de.neocargo.marketplace.config.Router
 import de.neocargo.marketplace.entity.Bidding
 import de.neocargo.marketplace.entity.Shipment
+import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -18,17 +22,17 @@ private val logger = KotlinLogging.logger { }
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/biddings")
+@RequestMapping("${Router.API_PATH}/biddings")
 class BiddingController(
     private val biddingRepository: BiddingRepository
 ) {
+    // TODO: Evaluate proper way to insure that user is logged in and has userId property set
     @PostMapping
-    fun createBidding(@RequestBody request: Shipment): ResponseEntity<Bidding> {
+    @PreAuthorize("#user.id != null")
+    fun createBidding(@AuthenticationPrincipal user: User, @RequestBody request: Shipment): ResponseEntity<Bidding> {
         val bidding = biddingRepository.save(
             Bidding(
-                // to be updated once userId is transferred in ShipmentTO
-                // userId = request.userId,
-                // shipment = request.shipment
+                userId = user.getId().toString(),
                 shipment = request
             )
         )
@@ -48,7 +52,7 @@ class BiddingController(
         return responseEntity
     }
 
-    @GetMapping("/api/{id}")
+    @GetMapping("/{id}")
     fun findBiddingById(@PathVariable("id")id: String): ResponseEntity<Bidding> {
         val bidding = biddingRepository.findByBiddingId(id)
         val responseEntity = ResponseEntity(bidding, HttpStatus.OK)
@@ -57,9 +61,10 @@ class BiddingController(
         return responseEntity
     }
 
-    @GetMapping("/api/user/{userId}")
-    fun findAllBiddingsByUserId(@PathVariable("userId")userId: Long): ResponseEntity<List<Bidding>> {
-        val biddings = biddingRepository.findAllBiddingsByUserId(userId)
+    @GetMapping("/user/{userId}")
+    @PreAuthorize("#user.id == #userId")
+    fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User, @PathVariable userId: String): ResponseEntity<List<Bidding>> {
+        val biddings = biddingRepository.findAllBiddingsByUserId(user.getId().toString())
         val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())

@@ -1,5 +1,6 @@
 package de.neocargo.marketplace.controller
 
+import de.neocargo.marketplace.config.Router
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.UserRepository
 import de.neocargo.marketplace.security.dto.UserDTO
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("${Router.API_PATH}/users")
 class UserController(
     @Autowired
     val userRepository: UserRepository) {
