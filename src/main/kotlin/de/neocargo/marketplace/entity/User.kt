@@ -1,46 +1,64 @@
 package de.neocargo.marketplace.entity
 
+import lombok.Data
+import lombok.NoArgsConstructor
+import lombok.RequiredArgsConstructor
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import java.util.UUID
+import java.util.*
 
-@Document(collection = "users")
-class User(private val username: String, private var password: String) : UserDetails {
+@Document
+@Data
+@RequiredArgsConstructor
+@NoArgsConstructor
+class User : UserDetails {
     @Id
-    val id: String = UUID.randomUUID().toString()
-
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return this.authorities
+    private var id: String? = null
+    private var username: String? = null
+    private var password: String? = null
+    override fun getAuthorities(): Collection<GrantedAuthority?> {
+        return Collections.emptyList()
     }
 
-    override fun getPassword(): String {
+    override fun getPassword(): String? {
         return this.password
     }
 
-    override fun getUsername(): String {
+    override fun getUsername(): String? {
         return this.username
     }
 
+    fun getId(): String? {
+        return this.id
+    }
+
     override fun isAccountNonExpired(): Boolean {
-        return this.isAccountNonExpired()
+        return true
     }
 
     override fun isAccountNonLocked(): Boolean {
-        return this.isAccountNonLocked()
+        return true
     }
 
     override fun isCredentialsNonExpired(): Boolean {
-        return this.isCredentialsNonExpired
+        return true
     }
 
     override fun isEnabled(): Boolean {
-        return this.isEnabled
+        return true
+    }
+
+    fun setUsername(username: String) {
+        this.username = username
     }
 
     fun setPassword(password: String) {
         this.password = password
     }
-}
 
+    fun setId(id: String) {
+        this.id = id
+    }
+}

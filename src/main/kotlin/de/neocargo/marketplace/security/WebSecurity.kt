@@ -85,14 +85,14 @@ class WebSecurity (
     @Bean
     @Primary
     fun jwtAccessTokenDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.withPublicKey(keyUtils?.accessTokenPublicKey).build()
+        return NimbusJwtDecoder.withPublicKey(keyUtils.accessTokenPublicKey).build()
     }
 
     @Bean
     @Primary
     fun jwtAccessTokenEncoder(): JwtEncoder {
-        val jwk: JWK = RSAKey.Builder(keyUtils?.accessTokenPublicKey)
-            .privateKey(keyUtils?.accessTokenPrivateKey)
+        val jwk: JWK = RSAKey.Builder(keyUtils.accessTokenPublicKey)
+            .privateKey(keyUtils.accessTokenPrivateKey)
             .build()
         val jwks: JWKSource<SecurityContext> = ImmutableJWKSet(JWKSet(jwk))
         return NimbusJwtEncoder(jwks)
@@ -101,14 +101,14 @@ class WebSecurity (
     @Bean
     @Qualifier("jwtRefreshTokenDecoder")
     fun jwtRefreshTokenDecoder(): JwtDecoder {
-        return NimbusJwtDecoder.withPublicKey(keyUtils?.refreshTokenPublicKey).build()
+        return NimbusJwtDecoder.withPublicKey(keyUtils.refreshTokenPublicKey).build()
     }
 
     @Bean
     @Qualifier("jwtRefreshTokenEncoder")
     fun jwtRefreshTokenEncoder(): JwtEncoder {
-        val jwk: JWK = RSAKey.Builder(keyUtils?.refreshTokenPublicKey)
-            .privateKey(keyUtils?.refreshTokenPrivateKey)
+        val jwk: JWK = RSAKey.Builder(keyUtils.refreshTokenPublicKey)
+            .privateKey(keyUtils.refreshTokenPrivateKey)
             .build()
         val jwks: JWKSource<SecurityContext> = ImmutableJWKSet(JWKSet(jwk))
         return NimbusJwtEncoder(jwks)

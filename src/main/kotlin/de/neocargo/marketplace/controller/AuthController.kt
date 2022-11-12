@@ -36,8 +36,10 @@ class AuthController(
 ) {
     @PostMapping("/register")
     fun register(@RequestBody signupDTO: SignupDTO): ResponseEntity<*> {
-        val user = User(username = signupDTO.username, password = signupDTO.password)
-        userDetailsManager!!.createUser(user)
+        val user = User()
+        user.setUsername(signupDTO.username)
+        user.setPassword(signupDTO.password)
+        userDetailsManager.createUser(user)
         val authentication: Authentication =
             UsernamePasswordAuthenticationToken.authenticated(user, signupDTO.password, Collections.emptyList())
         return ResponseEntity.ok(tokenGenerator.createToken(authentication))
@@ -45,7 +47,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(@RequestBody loginDTO: LoginDTO): ResponseEntity<*> {
-        val authentication = daoAuthenticationProvider!!.authenticate(
+        val authentication = daoAuthenticationProvider.authenticate(
             UsernamePasswordAuthenticationToken.unauthenticated(
                 loginDTO.username,
                 loginDTO.password
@@ -57,7 +59,7 @@ class AuthController(
     @PostMapping("/token")
     fun token(@RequestBody tokenDTO: TokenDTO): ResponseEntity<*> {
         val authentication =
-            refreshTokenAuthProvider!!.authenticate(BearerTokenAuthenticationToken(tokenDTO.refreshToken))
+            refreshTokenAuthProvider.authenticate(BearerTokenAuthenticationToken(tokenDTO.refreshToken))
         val jwt = authentication.credentials as Jwt
         // check if present in db and not revoked, etc
         return ResponseEntity.ok(tokenGenerator.createToken(authentication))

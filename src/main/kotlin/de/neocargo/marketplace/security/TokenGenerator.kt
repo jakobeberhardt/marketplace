@@ -15,7 +15,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 @Component
-class TokenGenerator {
+class TokenGenerator () {
     @Autowired
     var accessTokenEncoder: JwtEncoder? = null
 
@@ -31,19 +31,19 @@ class TokenGenerator {
             .issuer("myApp")
             .issuedAt(now)
             .expiresAt(now.plus(5, ChronoUnit.MINUTES))
-            .subject(user.id)
+            .subject(user.getId())
             .build()
         return accessTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
 
-    private fun createRefreshToken(authentication: Authentication):     String? {
+    private fun createRefreshToken(authentication: Authentication): String? {
         val user: User = authentication.principal as User
         val now = Instant.now()
         val claimsSet = JwtClaimsSet.builder()
             .issuer("myApp")
             .issuedAt(now)
             .expiresAt(now.plus(30, ChronoUnit.DAYS))
-            .subject(user.id)
+            .subject(user.getId())
             .build()
         return refreshTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
@@ -56,7 +56,7 @@ class TokenGenerator {
         }
 
         val user: User = authentication.principal as User
-        val tokenDTO = TokenDTO(userId = user.id, accessToken = createAccessToken(authentication), null)
+        val tokenDTO = TokenDTO(userId = user.getId(), accessToken = createAccessToken(authentication), createRefreshToken(authentication))
 
         return tokenDTO;
     }
