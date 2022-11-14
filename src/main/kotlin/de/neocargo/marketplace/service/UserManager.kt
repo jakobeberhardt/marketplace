@@ -14,14 +14,13 @@ class UserManager (
     @Autowired
     private val userRepository: UserRepository,
     @Autowired
-    val passwordEncoder: PasswordEncoder
-) : UserDetailsManager {
+    private val passwordEncoder: PasswordEncoder
+        ) : UserDetailsManager {
     override fun createUser(user: UserDetails) {
         (user as User).setPassword(passwordEncoder.encode(user.password))
         userRepository.save(user)
     }
 
-    // TODO: Suppressed for now
     override fun updateUser(user: UserDetails) {}
     override fun deleteUser(username: String) {}
     override fun changePassword(oldPassword: String, newPassword: String) {}

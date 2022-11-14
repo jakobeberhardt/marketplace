@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Lazy
 import org.springframework.context.annotation.Primary
+import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -32,22 +33,23 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler
 import org.springframework.security.provisioning.UserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.servlet.config.annotation.CorsRegistry
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurity (
     @Autowired
-    private var jwtToUserConverter: JwtToUserConverter,
-
+    private val jwtToUserConverter: JwtToUserConverter,
     @Autowired
-    private var keyUtils: KeyUtils,
-
+    private val keyUtils: KeyUtils,
     @Autowired
-    @Lazy var passwordEncoder: PasswordEncoder,
-
+    @Lazy val passwordEncoder: PasswordEncoder,
     @Autowired
-    @Lazy var userDetailsManager: UserDetailsManager,
-) {
+    @Lazy val userDetailsManager: UserDetailsManager,
+        ) {
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -80,6 +82,16 @@ class WebSecurity (
                     .accessDeniedHandler(BearerTokenAccessDeniedHandler())
             }
         return http.build()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("http://localhost:3000")
+        configuration.allowedMethods = listOf("GET", "POST")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 
     @Bean
@@ -135,4 +147,10 @@ class WebSecurity (
         return BCryptPasswordEncoder()
     }
 
+    @Bean
+    fun header(): HttpHeaders {
+        val responseHeaders = HttpHeaders()
+        responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+        return responseHeaders
+    }
 }
