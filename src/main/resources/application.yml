@@ -21,4 +21,4 @@ spring:
       database: neocargo-marketplace
   logging:
     level:
-      org.springframework.security: DEBUG
+      org.springframework.security: ${LOG_LEVEL}

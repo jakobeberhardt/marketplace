@@ -23,7 +23,6 @@ import java.util.*
 
 private val logger = KotlinLogging.logger { }
 
-@CrossOrigin
 @RestController
 @RequestMapping("${Router.API_PATH}/auth")
 class AuthController(

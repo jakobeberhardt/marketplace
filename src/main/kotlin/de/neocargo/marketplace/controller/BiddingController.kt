@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController
 
 private val logger = KotlinLogging.logger { }
 
+
 @RestController
-@CrossOrigin
 @RequestMapping("${Router.API_PATH}/biddings")
 class BiddingController(
     @Autowired

@@ -33,10 +33,8 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler
 import org.springframework.security.provisioning.UserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.CorsConfigurationSource
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -50,6 +48,14 @@ class WebSecurity (
     @Autowired
     @Lazy val userDetailsManager: UserDetailsManager,
         ) {
+    @Bean
+    fun corsConfigurer(): WebMvcConfigurer? {
+        return object : WebMvcConfigurer {
+            override fun addCorsMappings(registry: CorsRegistry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*")
+            }
+        }
+    }
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -81,17 +87,8 @@ class WebSecurity (
                     .authenticationEntryPoint(BearerTokenAuthenticationEntryPoint())
                     .accessDeniedHandler(BearerTokenAccessDeniedHandler())
             }
+            .cors()
         return http.build()
-    }
-
-    @Bean
-    fun corsConfigurationSource(): CorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:3000")
-        configuration.allowedMethods = listOf("GET", "POST")
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
     }
 
     @Bean
@@ -150,7 +147,7 @@ class WebSecurity (
     @Bean
     fun header(): HttpHeaders {
         val responseHeaders = HttpHeaders()
-        responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
         return responseHeaders
     }
+
 }

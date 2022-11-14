@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*
 
 private val logger = KotlinLogging.logger { }
 
-@CrossOrigin
 @RestController
 @RequestMapping("${Router.API_PATH}/users")
 class UserController(
