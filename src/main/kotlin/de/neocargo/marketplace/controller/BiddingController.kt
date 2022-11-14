@@ -6,6 +6,7 @@ import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import mu.KotlinLogging
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -61,11 +62,13 @@ class BiddingController(
         return responseEntity
     }
 
-    @GetMapping("/user/{userId}")
-    @PreAuthorize("#user.id == #userId")
-    fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User, @PathVariable userId: String): ResponseEntity<List<Bidding>> {
+    @GetMapping("/")
+    @PreAuthorize("#user.id != null")
+    fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User): ResponseEntity<List<Bidding>> {
         val biddings = biddingRepository.findAllBiddingsByUserId(user.getId().toString())
-        val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
+        val responseHeaders = HttpHeaders()
+        responseHeaders[HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
+        val responseEntity = ResponseEntity(biddings, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity

@@ -60,7 +60,6 @@ class WebSecurity (
                 }
             )
             .csrf().disable()
-            .cors().disable()
             .httpBasic().disable()
             .oauth2ResourceServer { oauth2: OAuth2ResourceServerConfigurer<HttpSecurity?> ->
                 oauth2.jwt(
