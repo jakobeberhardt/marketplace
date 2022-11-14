@@ -8,6 +8,8 @@ import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.security.TokenGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
@@ -16,12 +18,11 @@ import org.springframework.security.oauth2.jwt.Jwt
 import org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationProvider
 import org.springframework.security.provisioning.UserDetailsManager
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
+
+@CrossOrigin
 @RestController
 @RequestMapping("${Router.API_PATH}/auth")
 class AuthController(
@@ -36,33 +37,33 @@ class AuthController(
     private val refreshTokenAuthProvider: JwtAuthenticationProvider
 ) {
     @PostMapping("/register")
-    fun register(@RequestBody signupDTO: SignupDTO): ResponseEntity<*> {
+    fun register(@RequestBody signupDTO: SignupDTO): ResponseEntity<TokenDTO> {
         val user = User()
         user.setUsername(signupDTO.username)
         user.setPassword(signupDTO.password)
         userDetailsManager.createUser(user)
         val authentication: Authentication =
             UsernamePasswordAuthenticationToken.authenticated(user, signupDTO.password, Collections.emptyList())
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication))
+        return ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody loginDTO: LoginDTO): ResponseEntity<*> {
+    fun login(@RequestBody loginDTO: LoginDTO): ResponseEntity<TokenDTO> {
         val authentication = daoAuthenticationProvider.authenticate(
             UsernamePasswordAuthenticationToken.unauthenticated(
                 loginDTO.username,
                 loginDTO.password
             )
         )
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication))
+        return ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
     }
 
     @PostMapping("/token")
-    fun token(@RequestBody tokenDTO: TokenDTO): ResponseEntity<*> {
+    fun token(@RequestBody tokenDTO: TokenDTO): ResponseEntity<TokenDTO> {
         val authentication =
             refreshTokenAuthProvider.authenticate(BearerTokenAuthenticationToken(tokenDTO.refreshToken))
         val jwt = authentication.credentials as Jwt
-        // check if present in db and not revoked, etc
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication))
+        // e.g. for checking if userId is present in db and not revoked, etc
+        return ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
     }
 }

@@ -34,6 +34,7 @@ data class Bidding(
         type = "Shipment",
     )
     val shipment: Shipment,
+
     @field:Schema(
         description = "bids",
         type = "Bid[]",
