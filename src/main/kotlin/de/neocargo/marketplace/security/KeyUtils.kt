@@ -23,9 +23,8 @@ private val logger = KotlinLogging.logger { }
 @Component
 class KeyUtils (
     @Autowired
-    var environment: Environment,
+    private val environment: Environment,
 ) {
-
     @Value("\${access-token.private}")
     private val accessTokenPrivateKeyPath: String? = null
 
@@ -40,14 +39,14 @@ class KeyUtils (
     private var _accessTokenKeyPair: KeyPair? = null
     private var _refreshTokenKeyPair: KeyPair? = null
     private val accessTokenKeyPair: KeyPair?
-        private get() {
+        get() {
             if (Objects.isNull(_accessTokenKeyPair)) {
                 _accessTokenKeyPair = getKeyPair(accessTokenPublicKeyPath, accessTokenPrivateKeyPath)
             }
             return _accessTokenKeyPair
         }
     private val refreshTokenKeyPair: KeyPair?
-        private get() {
+        get() {
             if (Objects.isNull(_refreshTokenKeyPair)) {
                 _refreshTokenKeyPair = getKeyPair(refreshTokenPublicKeyPath, refreshTokenPrivateKeyPath)
             }
@@ -59,7 +58,7 @@ class KeyUtils (
         val publicKeyFile = File(publicKeyPath)
         val privateKeyFile = File(privateKeyPath)
         if (publicKeyFile.exists() && privateKeyFile.exists()) {
-            de.neocargo.marketplace.security.logger.info("loading keys from file: {}, {}", publicKeyPath, privateKeyPath)
+            logger.info("loading keys from file: {}, {}", publicKeyPath, privateKeyPath)
             return try {
                 val keyFactory = KeyFactory.getInstance("RSA")
                 val publicKeyBytes = Files.readAllBytes(publicKeyFile.toPath())
@@ -79,7 +78,7 @@ class KeyUtils (
             }
         } else {
             // Abort if keys are not present in production
-            if (Arrays.stream(environment!!.activeProfiles).anyMatch { s: String -> s == "prod" }) {
+            if (Arrays.stream(environment.activeProfiles).anyMatch { s: String -> s == "prod" }) {
                 throw RuntimeException("public and private keys don't exist")
             }
         }

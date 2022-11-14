@@ -6,9 +6,9 @@ import de.neocargo.marketplace.security.dto.SignupDTO
 import de.neocargo.marketplace.security.dto.TokenDTO
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.security.TokenGenerator
+import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -21,6 +21,7 @@ import org.springframework.security.provisioning.UserDetailsManager
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
+private val logger = KotlinLogging.logger { }
 
 @CrossOrigin
 @RestController
@@ -34,7 +35,7 @@ class AuthController(
     private val daoAuthenticationProvider: DaoAuthenticationProvider,
     @Autowired
     @Qualifier("jwtRefreshTokenAuthProvider")
-    private val refreshTokenAuthProvider: JwtAuthenticationProvider
+    private val refreshTokenAuthProvider: JwtAuthenticationProvider,
 ) {
     @PostMapping("/register")
     fun register(@RequestBody signupDTO: SignupDTO): ResponseEntity<TokenDTO> {
@@ -44,26 +45,30 @@ class AuthController(
         userDetailsManager.createUser(user)
         val authentication: Authentication =
             UsernamePasswordAuthenticationToken.authenticated(user, signupDTO.password, Collections.emptyList())
-        return ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
+        val responseEntity = ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
+        logger.info { "${responseEntity.statusCode} Issued credentials for user ${user.username.toString()}" }
+        return responseEntity
     }
 
     @PostMapping("/login")
     fun login(@RequestBody loginDTO: LoginDTO): ResponseEntity<TokenDTO> {
         val authentication = daoAuthenticationProvider.authenticate(
-            UsernamePasswordAuthenticationToken.unauthenticated(
-                loginDTO.username,
-                loginDTO.password
-            )
-        )
-        return ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
+            UsernamePasswordAuthenticationToken.unauthenticated(loginDTO.username, loginDTO.password))
+        val responseEntity =  ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
+        logger.info { "${responseEntity.statusCode} Issued credentials on login for user ${loginDTO.username}" }
+        return responseEntity
     }
 
     @PostMapping("/token")
     fun token(@RequestBody tokenDTO: TokenDTO): ResponseEntity<TokenDTO> {
         val authentication =
             refreshTokenAuthProvider.authenticate(BearerTokenAuthenticationToken(tokenDTO.refreshToken))
-        val jwt = authentication.credentials as Jwt
-        // e.g. for checking if userId is present in db and not revoked, etc
-        return ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
+          /*
+           * e.g. for checking if userId is present in db and/or not revoked or expired
+           * val jwt = authentication.credentials as Jwt
+           */
+        val responseEntity = ResponseEntity(tokenGenerator.createToken(authentication), HttpStatus.OK)
+        logger.info { "${responseEntity.statusCode} Issued refreshed token" }
+        return responseEntity
     }
 }

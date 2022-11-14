@@ -15,14 +15,13 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 @Component
-class TokenGenerator () {
+class TokenGenerator (
     @Autowired
-    var accessTokenEncoder: JwtEncoder? = null
-
+    private val accessTokenEncoder: JwtEncoder,
     @Autowired
     @Qualifier("jwtRefreshTokenEncoder")
-    var refreshTokenEncoder: JwtEncoder? = null
-
+    private val refreshTokenEncoder: JwtEncoder,
+        ) {
 
     private fun createAccessToken(authentication: Authentication): String? {
         val user: User = authentication.principal as User
@@ -33,7 +32,7 @@ class TokenGenerator () {
             .expiresAt(now.plus(5, ChronoUnit.MINUTES))
             .subject(user.getId())
             .build()
-        return accessTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
+        return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
 
     private fun createRefreshToken(authentication: Authentication): String? {
@@ -45,7 +44,7 @@ class TokenGenerator () {
             .expiresAt(now.plus(30, ChronoUnit.DAYS))
             .subject(user.getId())
             .build()
-        return refreshTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
+        return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
 
     fun  createToken(authentication :Authentication) : TokenDTO {
@@ -54,10 +53,8 @@ class TokenGenerator () {
                     MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal()::class)
             );
         }
-
         val user: User = authentication.principal as User
         val tokenDTO = TokenDTO(userId = user.getId(), accessToken = createAccessToken(authentication), createRefreshToken(authentication))
-
         return tokenDTO;
     }
 }
