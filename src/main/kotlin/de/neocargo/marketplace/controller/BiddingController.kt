@@ -27,7 +27,6 @@ private val logger = KotlinLogging.logger { }
 class BiddingController(
     private val biddingRepository: BiddingRepository
 ) {
-    // TODO: Evaluate proper way to insure that user is logged in and has userId property set
     @PostMapping
     @PreAuthorize("#user.id != null")
     fun createBidding(@AuthenticationPrincipal user: User, @RequestBody request: Shipment): ResponseEntity<Bidding> {
@@ -37,17 +36,7 @@ class BiddingController(
                 shipment = request
             )
         )
-
         val responseEntity = ResponseEntity(bidding, HttpStatus.CREATED)
-        logger.info(responseEntity.statusCode.toString())
-        logger.debug(responseEntity.toString())
-        return responseEntity
-    }
-
-    @GetMapping
-    fun getAllBiddings(): ResponseEntity<List<Bidding>> {
-        val biddings = biddingRepository.findAll()
-        val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -56,7 +45,9 @@ class BiddingController(
     @GetMapping("/{id}")
     fun findBiddingById(@PathVariable("id")id: String): ResponseEntity<Bidding> {
         val bidding = biddingRepository.findByBiddingId(id)
-        val responseEntity = ResponseEntity(bidding, HttpStatus.OK)
+        val responseHeaders = HttpHeaders()
+        responseHeaders[HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
+        val responseEntity = ResponseEntity(bidding, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
