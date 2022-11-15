@@ -64,6 +64,7 @@ class WebSecurity (
                 Customizer { authorize ->
                     authorize
                         .antMatchers("${Router.API_PATH}/auth/*").permitAll()
+                        .antMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 }
             )
