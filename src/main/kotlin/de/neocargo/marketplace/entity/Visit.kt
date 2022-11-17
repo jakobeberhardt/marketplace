@@ -11,10 +11,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder
     "timeWindowBookingUrl",
 )
 data class Visit(
-    val station: Station,
+    val station: Station?,
     val contact: String,
     val plannedServiceDuration: Int?,
-    val avis: List<Avis>,
-    val allowedTimeWindows: List<AllowedTimeWindow>,
+    val avis: List<Avis>?,
+    val allowedTimeWindows: List<AllowedTimeWindow>?,
     val timeWindowBookingUrl: String,
 )
