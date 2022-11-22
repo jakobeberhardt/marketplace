@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 private val logger = KotlinLogging.logger { }
 
 @RestController
-@RequestMapping("${Router.API_PATH}/users")
+@RequestMapping("${Router.API_PATH}/users/whitelist")
 class UserController(
     @Autowired
     private val userRepository: UserRepository,
@@ -31,4 +31,6 @@ class UserController(
         logger.info {"${responseEntity.statusCode} ${id}"}
         return responseEntity
     }
+
+
 }
