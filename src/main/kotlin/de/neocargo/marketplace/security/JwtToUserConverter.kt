@@ -14,7 +14,7 @@ class JwtToUserConverter : Converter<Jwt, UsernamePasswordAuthenticationToken> {
         // Creates user with JWT subject ID
         // TODO: Add secondary constructor for post-signup User objects
         val user = User()
-        user.setId(jwt.subject)
+        user.id = jwt.subject
 
         return UsernamePasswordAuthenticationToken(user, jwt, Collections.emptyList())
     }

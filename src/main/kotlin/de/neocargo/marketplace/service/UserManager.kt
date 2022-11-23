@@ -16,7 +16,7 @@ class UserManager (
     @Autowired
     val passwordEncoder: PasswordEncoder
 ) : UserDetailsManager {
-    override fun createUser(user: UserDetails) {
+    override fun createUser(user: UserDetails){
         (user as User).setPassword(passwordEncoder.encode(user.password))
         userRepository.save(user)
     }
@@ -38,4 +38,5 @@ class UserManager (
     override fun loadUserByUsername(username: String): UserDetails? {
         return userRepository.findByUsername(username)
     }
+
 }

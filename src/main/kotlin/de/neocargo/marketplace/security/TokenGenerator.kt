@@ -31,7 +31,7 @@ class TokenGenerator () {
             .issuer("myApp")
             .issuedAt(now)
             .expiresAt(now.plus(5, ChronoUnit.MINUTES))
-            .subject(user.getId())
+            .subject(user.id)
             .build()
         return accessTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
@@ -43,7 +43,7 @@ class TokenGenerator () {
             .issuer("myApp")
             .issuedAt(now)
             .expiresAt(now.plus(30, ChronoUnit.DAYS))
-            .subject(user.getId())
+            .subject(user.id)
             .build()
         return refreshTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
@@ -56,7 +56,7 @@ class TokenGenerator () {
         }
 
         val user: User = authentication.principal as User
-        val tokenDTO = TokenDTO(userId = user.getId(), accessToken = createAccessToken(authentication), createRefreshToken(authentication))
+        val tokenDTO = TokenDTO(userId = user.id, accessToken = createAccessToken(authentication), createRefreshToken(authentication))
 
         return tokenDTO;
     }
