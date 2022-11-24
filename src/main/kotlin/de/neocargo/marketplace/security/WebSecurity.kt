@@ -137,7 +137,6 @@ class WebSecurity (
 
     @Bean
     fun header(): HttpHeaders {
-        val responseHeaders = HttpHeaders()
-        return responseHeaders
+        return HttpHeaders()
     }
 }

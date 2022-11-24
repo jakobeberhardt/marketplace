@@ -23,6 +23,7 @@ private val logger = KotlinLogging.logger { }
 
 
 @RestController
+@CrossOrigin(origins = arrayOf("http:://localhost:3000"), allowCredentials = "true")
 @RequestMapping("${Router.API_PATH}/biddings")
 class BiddingController(
     @Autowired
@@ -35,7 +36,7 @@ class BiddingController(
     fun createBidding(@AuthenticationPrincipal user: User, @RequestBody request: Shipment): ResponseEntity<Bidding> {
         val bidding = biddingRepository.save(
             Bidding(
-                userId = user.getId().toString(),
+                userId = user.id.toString(),
                 shipment = request
             )
         )
@@ -48,7 +49,9 @@ class BiddingController(
     @GetMapping("/")
     @PreAuthorize("#user.id != null")
     fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User): ResponseEntity<List<Bidding>> {
-        val biddings = biddingRepository.findAllBiddingsByUserId(user.getId().toString())
+        val biddings = biddingRepository.findAllBiddingsByUserId(user.id.toString())
+        val responseHeaders = HttpHeaders()
+        responseHeaders[HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN] = "*"
         val responseEntity = ResponseEntity(biddings, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())

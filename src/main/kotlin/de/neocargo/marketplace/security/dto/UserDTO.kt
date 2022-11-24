@@ -8,8 +8,7 @@ data class UserDTO (
 ) {
 
     companion object {
-        fun from(user: User): UserDTO {
-            return UserDTO(id = user.getId(), username = user.username)
-        }
+        fun from(user: User): UserDTO = UserDTO(id = user.id, username = user.username)
+
     }
 }

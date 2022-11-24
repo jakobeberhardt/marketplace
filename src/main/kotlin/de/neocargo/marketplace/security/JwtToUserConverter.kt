@@ -13,7 +13,7 @@ class JwtToUserConverter : Converter<Jwt, UsernamePasswordAuthenticationToken> {
     override fun convert(jwt: Jwt): UsernamePasswordAuthenticationToken {
         // TODO: Add secondary constructor for post-signup User objects
         val user = User()
-        user.setId(jwt.subject)
+        user.id = jwt.subject
         return UsernamePasswordAuthenticationToken(user, jwt, Collections.emptyList())
     }
 }
