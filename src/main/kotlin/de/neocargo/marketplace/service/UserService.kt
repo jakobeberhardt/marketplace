@@ -24,4 +24,5 @@ class UserService(
             }
         }
         return userRepository.findById(user)
-    }}
+    }
+}
