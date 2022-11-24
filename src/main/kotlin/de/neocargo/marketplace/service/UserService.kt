@@ -2,7 +2,7 @@
 
 package de.neocargo.marketplace.service
 
-import de.neocargo.marketplace.controller.DTOs.WhitelistDTO
+import de.neocargo.marketplace.security.dto.WhitelistDTO
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     @Autowired
-    val userRepository: UserRepository) {
+    val userRepository: UserRepository
+    ) {
 
     fun addUserToWhitelist(user: String, newUserId: String) : User {
         val updatedUser: User = userRepository.findById(user)
@@ -24,15 +25,5 @@ class UserService(
             }
         }
         return userRepository.findById(user)
-
-
-    fun deleteUserFromWhitelist(user: String, newUserId: String) : WhitelistDTO {
-        val updateUser: User = userRepository.findById(user)
-        updateUser.whitelist.remove(newUserId)
-        userRepository.save(updatedUser)
-        val userDto = WhitelistDTO.toWhitelistDto(updatedUser)
-        return userDto
     }
-
-
-    }}
+}
