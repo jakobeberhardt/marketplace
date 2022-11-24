@@ -1,7 +1,6 @@
 package de.neocargo.marketplace.controller
 
 import de.neocargo.marketplace.config.Router
-import de.neocargo.marketplace.security.dto.WhitelistDTO
 import de.neocargo.marketplace.security.dto.WhitelistDTO.Companion.from
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.service.UserService
@@ -23,34 +22,14 @@ class UserController(
     private val responseHeaders: HttpHeaders
 ) {
 
-
     @PostMapping
     @PreAuthorize("#user.id != null")
-    fun addUserToWhitelist(@AuthenticationPrincipal user: User, @RequestBody newUser : String) : ResponseEntity<*>{
-        val updatedUser : User = userService.addUserToWhitelist(user.id.toString(), newUser)
+    fun addUserToWhitelist(@AuthenticationPrincipal user: User, @RequestBody newUser: String): ResponseEntity<*> {
+        val updatedUser: User = userService.addUserToWhitelist(user.id.toString(), newUser)
         val send = from(updatedUser)
         val responseEntity = ResponseEntity(send, responseHeaders, HttpStatus.CREATED)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
-
-
     }
-
-    @PostMapping("/whitelist")
-    @PreAuthorize("#user.id != null")
-    fun deleteUserFromWhitelist(@AuthenticationPrincipal user: User, @RequestBody newUser : String) : ResponseEntity<*>{
-        val updatedUser : User = userService.addUserToWhitelist(user.id.toString(), newUser)
-        val send = WhitelistDTO(updatedUser.id, updatedUser.whitelist)
-        val responseEntity = ResponseEntity(send, HttpStatus.CREATED)
-        logger.info(responseEntity.statusCode.toString())
-        logger.debug(responseEntity.toString())
-        return ResponseEntity(responseEntity, HttpStatus.CREATED)
-
-
-    }
-
-
-git add .
 }
-

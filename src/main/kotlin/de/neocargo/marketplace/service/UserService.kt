@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     @Autowired
-    val userRepository: UserRepository) {
+    val userRepository: UserRepository
+    ) {
 
     fun addUserToWhitelist(user: String, newUserId: String) : User {
         val updatedUser: User = userRepository.findById(user)
@@ -23,8 +24,4 @@ class UserService(
             }
         }
         return userRepository.findById(user)
-
-    }
-
-
-    }
+    }}
