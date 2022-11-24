@@ -1,4 +1,4 @@
-package de.neocargo.marketplace.controller.DTOs
+package de.neocargo.marketplace.security.dto
 
 import de.neocargo.marketplace.entity.User
 
@@ -8,7 +8,7 @@ data class WhitelistDTO(
 ){
 
     companion object {
-        fun toWhitelistDto(user: User): WhitelistDTO {
+        fun from(user: User): WhitelistDTO {
             return WhitelistDTO(user.id, user.whitelist)
         }
     }
