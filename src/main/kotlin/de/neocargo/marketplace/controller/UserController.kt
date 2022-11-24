@@ -5,6 +5,7 @@ import de.neocargo.marketplace.controller.DTOs.WhitelistDTO
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.UserRepository
 import de.neocargo.marketplace.service.UserService
+
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -15,9 +16,8 @@ import org.springframework.web.bind.annotation.*
 
 private val logger = KotlinLogging.logger { }
 
-@CrossOrigin
 @RestController
-@RequestMapping("${Router.API_PATH}/users")
+@RequestMapping("${Router.API_PATH}/users/whitelist")
 class UserController(
     @Autowired
     val userService: UserService,

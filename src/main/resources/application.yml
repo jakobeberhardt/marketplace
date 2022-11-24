@@ -16,9 +16,9 @@ spring:
     active: dev
   data:
     mongodb:
-      host: localhost
+      host: ${DB_HOST}
       port: 27017
       database: neocargo-marketplace
   logging:
     level:
-      org.springframework.security: DEBUG
+      org.springframework.security: ${LOG_LEVEL}

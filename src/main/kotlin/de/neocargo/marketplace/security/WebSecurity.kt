@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Lazy
 import org.springframework.context.annotation.Primary
+import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -37,17 +38,14 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurity (
     @Autowired
-    private var jwtToUserConverter: JwtToUserConverter,
-
+    private val jwtToUserConverter: JwtToUserConverter,
     @Autowired
-    private var keyUtils: KeyUtils,
-
+    private val keyUtils: KeyUtils,
     @Autowired
-    @Lazy var passwordEncoder: PasswordEncoder,
-
+    @Lazy val passwordEncoder: PasswordEncoder,
     @Autowired
-    @Lazy var userDetailsManager: UserDetailsManager,
-) {
+    @Lazy val userDetailsManager: UserDetailsManager,
+        ) {
     @Bean
     @Throws(Exception::class)
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -56,6 +54,7 @@ class WebSecurity (
                 Customizer { authorize ->
                     authorize
                         .antMatchers("${Router.API_PATH}/auth/*").permitAll()
+                        .antMatchers("/swagger-ui/**").permitAll()
                         .anyRequest().authenticated()
                 }
             )
@@ -79,6 +78,7 @@ class WebSecurity (
                     .authenticationEntryPoint(BearerTokenAuthenticationEntryPoint())
                     .accessDeniedHandler(BearerTokenAccessDeniedHandler())
             }
+            .cors()
         return http.build()
     }
 
@@ -135,4 +135,9 @@ class WebSecurity (
         return BCryptPasswordEncoder()
     }
 
+    @Bean
+    fun header(): HttpHeaders {
+        val responseHeaders = HttpHeaders()
+        return responseHeaders
+    }
 }

@@ -11,11 +11,9 @@ import java.util.*
 @Component
 class JwtToUserConverter : Converter<Jwt, UsernamePasswordAuthenticationToken> {
     override fun convert(jwt: Jwt): UsernamePasswordAuthenticationToken {
-        // Creates user with JWT subject ID
         // TODO: Add secondary constructor for post-signup User objects
         val user = User()
         user.id = jwt.subject
-
         return UsernamePasswordAuthenticationToken(user, jwt, Collections.emptyList())
     }
 }

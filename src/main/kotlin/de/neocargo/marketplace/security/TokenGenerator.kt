@@ -15,14 +15,13 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 @Component
-class TokenGenerator () {
+class TokenGenerator (
     @Autowired
-    var accessTokenEncoder: JwtEncoder? = null
-
+    private val accessTokenEncoder: JwtEncoder,
     @Autowired
     @Qualifier("jwtRefreshTokenEncoder")
-    var refreshTokenEncoder: JwtEncoder? = null
-
+    private val refreshTokenEncoder: JwtEncoder,
+        ) {
 
     private fun createAccessToken(authentication: Authentication): String? {
         val user: User = authentication.principal as User
@@ -33,7 +32,7 @@ class TokenGenerator () {
             .expiresAt(now.plus(5, ChronoUnit.MINUTES))
             .subject(user.id)
             .build()
-        return accessTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
+        return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
 
     private fun createRefreshToken(authentication: Authentication): String? {
@@ -45,19 +44,21 @@ class TokenGenerator () {
             .expiresAt(now.plus(30, ChronoUnit.DAYS))
             .subject(user.id)
             .build()
-        return refreshTokenEncoder!!.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
+        return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).tokenValue
     }
 
-    fun  createToken(authentication :Authentication) : TokenDTO {
+    fun createToken(authentication: Authentication): TokenDTO {
         if (!(authentication.principal is User)) {
             throw BadCredentialsException(
-                    MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal()::class)
+                MessageFormat.format("principal {0} is not of User type", authentication.getPrincipal()::class)
             );
         }
-
         val user: User = authentication.principal as User
-        val tokenDTO = TokenDTO(userId = user.id, accessToken = createAccessToken(authentication), createRefreshToken(authentication))
 
-        return tokenDTO;
+        return TokenDTO(
+            userId = user.id,
+            accessToken = createAccessToken(authentication),
+            createRefreshToken(authentication)
+        );
     }
 }
