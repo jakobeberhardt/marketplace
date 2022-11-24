@@ -18,7 +18,7 @@ spring:
     mongodb:
       host: ${DB_HOST}
       port: 27017
-      database: neocargo-marketplace
+      database: ${DB_HOST}
   logging:
     level:
       org.springframework.security: ${LOG_LEVEL}
