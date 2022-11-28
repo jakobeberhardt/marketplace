@@ -10,18 +10,29 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(
     @Autowired
-    val userRepository: UserRepository
+    private val userRepository: UserRepository
     ) {
 
-    fun addUserToWhitelist(user: String, newUserId: String) : User {
-        val updatedUser: User = userRepository.findById(user)
-        updatedUser.whitelist.let {
-            it.add(newUserId)
+    fun getWhitelist(userId: String): User = userRepository.findById(userId)
+
+    fun addUserToWhitelist(userId: String, newUserId: String) : User {
+        val updatedUser: User = userRepository.findById(userId)
+        if (updatedUser.whitelist.isEmpty()) {
+            updatedUser.whitelist[1] = newUserId
         }
-        updatedUser.id.let {
-            if (it != null) {
-                return userRepository.save(updatedUser)
-            }
+        else {
+            updatedUser.whitelist[updatedUser.whitelist.keys.last() + 1] = newUserId
         }
-        return userRepository.findById(user)
-    }}
+        userRepository.save(updatedUser)
+        return updatedUser
+    }
+
+    fun deleteUserFromWhitelist(userId: String, removeUserId: String): User {
+        val updatedUser : User = userRepository.findById(userId)
+        if (updatedUser.whitelist.containsValue(removeUserId)){
+            updatedUser.whitelist.values.remove(removeUserId)
+            userRepository.save(updatedUser)
+        }
+        return updatedUser
+    }
+}

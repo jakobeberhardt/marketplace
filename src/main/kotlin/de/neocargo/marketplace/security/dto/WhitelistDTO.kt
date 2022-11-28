@@ -4,7 +4,7 @@ import de.neocargo.marketplace.entity.User
 
 data class WhitelistDTO(
     var id : String?,
-    var whitelist : List<String>
+    var whitelist : MutableMap<Int, String>
 ){
 
     companion object {
