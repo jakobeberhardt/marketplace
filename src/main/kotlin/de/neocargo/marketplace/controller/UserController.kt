@@ -3,6 +3,7 @@ package de.neocargo.marketplace.controller
 import de.neocargo.marketplace.config.Router
 import de.neocargo.marketplace.security.dto.WhitelistDTO.Companion.from
 import de.neocargo.marketplace.entity.User
+import de.neocargo.marketplace.security.dto.UserDTO
 import de.neocargo.marketplace.security.dto.WhitelistDTO
 import de.neocargo.marketplace.service.UserService
 import mu.KotlinLogging
@@ -27,9 +28,8 @@ class UserController(
     @GetMapping("/")
     @PreAuthorize("#user.id != null")
     fun getWhitelist(@AuthenticationPrincipal user: User): ResponseEntity<WhitelistDTO> {
-        val updatedUser: User = userService.getWhitelist(user.id.toString())
-        val send = from(updatedUser)
-        val responseEntity = ResponseEntity(send, responseHeaders, HttpStatus.OK)
+        val whitelist: WhitelistDTO = WhitelistDTO(userService.getWhitelist(user.id.toString()))
+        val responseEntity = ResponseEntity(whitelist, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -37,8 +37,8 @@ class UserController(
 
     @PostMapping
     @PreAuthorize("#user.id != null")
-    fun addUserToWhitelist(@AuthenticationPrincipal user: User, @RequestBody newUser: String): ResponseEntity<WhitelistDTO> {
-        val updatedUser: User = userService.addUserToWhitelist(user.id.toString(), newUser)
+    fun addUserToWhitelist(@AuthenticationPrincipal user: User, @RequestBody newUser: UserDTO): ResponseEntity<WhitelistDTO> {
+        val updatedUser: User = userService.addUserToWhitelist(user.id.toString(), newUser.id.toString())
         val send = from(updatedUser)
         val responseEntity = ResponseEntity(send, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
@@ -48,8 +48,8 @@ class UserController(
 
     @DeleteMapping
     @PreAuthorize("#user.id != null")
-    fun deleteUserFromWhitelist(@AuthenticationPrincipal user: User, @RequestBody removeUser: String): ResponseEntity<WhitelistDTO> {
-        val updatedUser: User = userService.deleteUserFromWhitelist(user.id.toString(), removeUser)
+    fun deleteUserFromWhitelist(@AuthenticationPrincipal user: User, @RequestBody removeUser: UserDTO): ResponseEntity<WhitelistDTO> {
+        val updatedUser: User = userService.deleteUserFromWhitelist(user.id.toString(), removeUser.id.toString())
         val send = from(updatedUser)
         val responseEntity = ResponseEntity(send, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())

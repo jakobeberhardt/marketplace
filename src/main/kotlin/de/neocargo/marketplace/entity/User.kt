@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 @RequiredArgsConstructor
 @NoArgsConstructor
 data class User(
-    var whitelist: MutableMap<Int, String> = mutableMapOf(),
+    var whitelist: MutableList<String> = mutableListOf(),
     var publishedBiddings : MutableMap<Int, String> = mutableMapOf(),
     var assignedBiddings : MutableMap<Int, String> = mutableMapOf()
 
