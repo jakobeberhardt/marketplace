@@ -5,6 +5,8 @@ import de.neocargo.marketplace.entity.Bidding
 import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
+import de.neocargo.marketplace.repository.UserRepository
+import de.neocargo.marketplace.service.UserService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController
 
 private val logger = KotlinLogging.logger { }
 
-
 @RestController
 @CrossOrigin
 @RequestMapping("${Router.API_PATH}/biddings")
@@ -29,7 +30,11 @@ class BiddingController(
     @Autowired
     private val biddingRepository: BiddingRepository,
     @Autowired
-    private val responseHeaders: HttpHeaders
+    private val userService: UserService,
+    @Autowired
+    private val userRepository: UserRepository,
+    @Autowired
+    private val responseHeaders: HttpHeaders,
 ) {
     @PostMapping
     @PreAuthorize("#user.id != null")
@@ -41,6 +46,13 @@ class BiddingController(
             )
         )
         val responseEntity = ResponseEntity(bidding, HttpStatus.CREATED)
+
+        if (responseEntity.statusCodeValue == HttpStatus.CREATED.value()) {
+            userService.addBiddingToPublishedBiddings(user.id!!, bidding.id)
+            val user = userRepository.findWhitlistbyUserId(user.id!!)
+            userService.addBiddingToAssignedBiddings(user.whitelist, bidding.id)
+        }
+
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
