@@ -17,9 +17,8 @@ import kotlin.collections.ArrayList
 @NoArgsConstructor
 data class User(
     var whitelist: MutableList<String> = mutableListOf(),
-    var publishedBiddings : MutableMap<Int, String> = mutableMapOf(),
-    var assignedBiddings : MutableMap<Int, String> = mutableMapOf()
-
+    var publishedBiddings : MutableSet<String> = mutableSetOf(),
+    var assignedBiddings : MutableSet<String> = mutableSetOf(),
 ) : UserDetails {
     @Id
     var id: String? = null
@@ -61,7 +60,4 @@ data class User(
     fun setPassword(password: String) {
         this.password = password
     }
-
-
-
 }
