@@ -6,6 +6,8 @@ import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import de.neocargo.marketplace.repository.UserRepository
+import de.neocargo.marketplace.security.dto.WhitelistDTO
+import de.neocargo.marketplace.service.BiddingService
 import de.neocargo.marketplace.service.UserService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,6 +33,8 @@ class BiddingController(
     private val biddingRepository: BiddingRepository,
     @Autowired
     private val userService: UserService,
+    @Autowired
+    private val biddingService: BiddingService,
     @Autowired
     private val userRepository: UserRepository,
     @Autowired
@@ -66,5 +70,17 @@ class BiddingController(
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
+    }
+
+    @GetMapping("/assigned")
+    @PreAuthorize("#user.id != null")
+    fun getAssignedBiddings(@AuthenticationPrincipal user: User) : ResponseEntity<MutableSet<Bidding>> {
+        val assignedBiddings = biddingService.getAssignedBiddings(user.id.toString())
+        val responseEntity = ResponseEntity(assignedBiddings, responseHeaders, HttpStatus.OK)
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
+        return responseEntity
+
+
     }
 }
