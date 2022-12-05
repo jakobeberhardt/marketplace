@@ -8,10 +8,15 @@ import java.util.UUID
 @JsonPropertyOrder(
     "id",
     "userId",
+    "value",
+    "currency",
 )
 @Document(collection = "bids")
 data class Bid(
     @Id
     val id: String = UUID.randomUUID().toString(),
-    val userId: Long = 1,
+    val userId : String,
+    val value : Double,
+    val currency : String,
+
 )
