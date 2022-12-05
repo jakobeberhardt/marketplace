@@ -15,8 +15,9 @@ import java.util.UUID
 data class Bid(
     @Id
     val id: String = UUID.randomUUID().toString(),
-    val userId : String,
-    val value : Double,
-    val currency : String,
+    val biddingId : String,
+    val userId: String,
+    val value: String,
+    val currency: String,
 
-)
+    )

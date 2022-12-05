@@ -39,5 +39,5 @@ data class Bidding(
         description = "bids",
         type = "Bid[]",
     )
-    var bids: ArrayList<Bid> = arrayListOf(),
+    var bids: MutableSet<Bid> = mutableSetOf()
 )
