@@ -7,6 +7,7 @@ import java.util.UUID
 
 @JsonPropertyOrder(
     "id",
+    "biddingId",
     "userId",
     "value",
     "currency",
@@ -17,7 +18,7 @@ data class Bid(
     val id: String = UUID.randomUUID().toString(),
     val biddingId : String,
     val userId: String,
-    val value: String,
+    val value: Long,
     val currency: String,
 
     )

@@ -3,7 +3,6 @@ package de.neocargo.marketplace.service
 import de.neocargo.marketplace.entity.Bid
 import de.neocargo.marketplace.entity.Bidding
 import de.neocargo.marketplace.entity.User
-import de.neocargo.marketplace.repository.BidRepository
 import de.neocargo.marketplace.repository.BiddingRepository
 import de.neocargo.marketplace.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,8 +14,6 @@ class BiddingService(
     private val biddingRepository: BiddingRepository,
     @Autowired
     private val userRepository: UserRepository,
-    @Autowired
-    private val bidRepository : BidRepository
 ) {
 
     fun getAssignedBiddings(userId : String) : MutableSet<Bidding>{
@@ -26,10 +23,17 @@ class BiddingService(
             assignedBiddings.add(biddingRepository.findBiddingById(i)!!)
         return assignedBiddings
 }
+    fun findAllBiddings(userId: String): MutableSet<Bidding> {
+        val biddings = biddingRepository.findAllBiddingsByUserId(userId)
+        if (biddings != null) {
+            return biddings
+        }
+        return mutableSetOf()
+    }
 
     fun addBidToBidding(userId: String, bid : Bid): Bidding {
         val user : User = userRepository.findById(userId)
-        val bid = Bid(userId = bid.userId,
+        val bid = Bid(userId = userId,
             biddingId = bid.biddingId,
             value = bid.value,
             currency = bid.currency)

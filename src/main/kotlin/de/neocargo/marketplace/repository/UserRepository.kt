@@ -16,5 +16,5 @@ import java.util.*
         fun findByUsername(username: String): de.neocargo.marketplace.entity.User
 
         @Query(value = "{_id : ?0}", fields = "{whitelist: 1}")
-        fun findWhitlistbyUserId(id: String): User
+        fun findWhitelistByUserId(id: String): User
     }
