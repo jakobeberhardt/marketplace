@@ -13,11 +13,11 @@ class BiddingService(
     @Autowired
     private val biddingRepository: BiddingRepository,
     @Autowired
-    private val userRepository: UserRepository,
+    private val userService: UserService,
 ) {
 
     fun getAssignedBiddings(userId : String) : MutableSet<Bidding>{
-        val user : User = userRepository.findById(userId)
+        val user : User = userService.findById(userId)
         val assignedBiddings : MutableSet<Bidding> = mutableSetOf()
         for (i in user.assignedBiddings)
             assignedBiddings.add(biddingRepository.findBiddingById(i)!!)
@@ -25,14 +25,14 @@ class BiddingService(
 }
     fun findAllBiddings(userId: String): MutableSet<Bidding> {
         val biddings = biddingRepository.findAllBiddingsByUserId(userId)
-        if (biddings != null) {
+        if (!biddings.isNullOrEmpty()) {
             return biddings
         }
         return mutableSetOf()
     }
 
     fun addBidToBidding(userId: String, bid : Bid): Bidding {
-        val user : User = userRepository.findById(userId)
+        val user : User = userService.findById(userId)
         val bid = Bid(userId = userId,
             biddingId = bid.biddingId,
             value = bid.value,

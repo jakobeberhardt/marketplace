@@ -56,4 +56,6 @@ class UserService(
         update.addToSet("assignedBiddings", biddingId)
         mongoTemplate.updateMulti(query, update, User::class.java)
     }
+
+    fun findById(userId : String) : User = userRepository.findById(userId)
 }
