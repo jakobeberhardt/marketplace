@@ -1,6 +1,7 @@
 package de.neocargo.marketplace.controller
 
 import de.neocargo.marketplace.config.Router
+import de.neocargo.marketplace.entity.Bid
 import de.neocargo.marketplace.entity.Bidding
 import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.entity.User
@@ -80,7 +81,17 @@ class BiddingController(
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
+    }
 
+    @PostMapping("/bid")
+    @PreAuthorize("#user.id != null")
+    fun addBidToBidding(@AuthenticationPrincipal user: User, @RequestBody bid : Bid) : ResponseEntity<Bidding>{
+        val bidding = biddingService.addBidToBidding(user.id.toString(), bid)
+        val responseEntity = ResponseEntity(bidding, responseHeaders, HttpStatus.CREATED)
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
+        return responseEntity
 
     }
+
 }

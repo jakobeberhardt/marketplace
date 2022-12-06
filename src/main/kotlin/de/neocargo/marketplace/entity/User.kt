@@ -19,6 +19,7 @@ data class User(
     var whitelist: MutableList<String> = mutableListOf(),
     var publishedBiddings : MutableSet<String> = mutableSetOf(),
     var assignedBiddings : MutableSet<String> = mutableSetOf(),
+    var bids : MutableSet<Bid> = mutableSetOf()
 ) : UserDetails {
     @Id
     var id: String? = null

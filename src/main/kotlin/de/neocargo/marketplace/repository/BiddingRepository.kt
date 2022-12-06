@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query
 
 interface BiddingRepository : MongoRepository<Bidding, Long> {
     @Query("{ 'id' : ?0 }")
-    fun findByBiddingId(id: String): Bidding?
+    fun findBiddingById(id: String): Bidding?
 
     @Query("{ 'userId' : ?0 }")
     fun findAllBiddingsByUserId(userId: String): List<Bidding>?
