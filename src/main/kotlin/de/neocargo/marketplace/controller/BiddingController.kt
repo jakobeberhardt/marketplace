@@ -7,7 +7,6 @@ import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import de.neocargo.marketplace.repository.UserRepository
-import de.neocargo.marketplace.security.dto.WhitelistDTO
 import de.neocargo.marketplace.service.BiddingService
 import de.neocargo.marketplace.service.UserService
 import mu.KotlinLogging
@@ -54,7 +53,7 @@ class BiddingController(
 
         if (responseEntity.statusCodeValue == HttpStatus.CREATED.value()) {
             userService.addBiddingToPublishedBiddings(user.id!!, bidding.id)
-            val user = userRepository.findWhitlistbyUserId(user.id!!)
+            val user = userRepository.findWhitelistByUserId(user.id!!)
             userService.addBiddingToAssignedBiddings(user.whitelist, bidding.id)
         }
 
@@ -65,8 +64,8 @@ class BiddingController(
 
     @GetMapping("/")
     @PreAuthorize("#user.id != null")
-    fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User): ResponseEntity<List<Bidding>> {
-        val biddings = biddingRepository.findAllBiddingsByUserId(user.id.toString())
+    fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User): ResponseEntity<MutableSet<Bidding>> {
+        val biddings = biddingService.findAllBiddings(user.id.toString())
         val responseEntity = ResponseEntity(biddings, responseHeaders, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
@@ -85,7 +84,7 @@ class BiddingController(
 
     @PostMapping("/bid")
     @PreAuthorize("#user.id != null")
-    fun addBidToBidding(@AuthenticationPrincipal user: User, @RequestBody bid : Bid) : ResponseEntity<Bidding>{
+    fun addBidToBidding(@AuthenticationPrincipal user: User, @RequestBody bid: Bid) : ResponseEntity<Bidding>{
         val bidding = biddingService.addBidToBidding(user.id.toString(), bid)
         val responseEntity = ResponseEntity(bidding, responseHeaders, HttpStatus.CREATED)
         logger.info(responseEntity.statusCode.toString())
