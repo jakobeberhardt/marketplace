@@ -29,6 +29,7 @@ data class Bidding(
         minimum = "0",
     )
     val userId: String,
+
     @field:Schema(
         description = "Shipment",
         type = "Shipment",
@@ -39,5 +40,10 @@ data class Bidding(
         description = "bids",
         type = "Bid[]",
     )
-    var bids: MutableSet<Bid> = mutableSetOf()
+    var bids: MutableSet<Bid> = mutableSetOf(),
+
+    @field:Schema(
+        description = "active",
+        type = "Boolean")
+    var active : Boolean = true,
 )

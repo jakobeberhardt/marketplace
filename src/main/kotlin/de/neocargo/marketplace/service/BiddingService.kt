@@ -4,7 +4,6 @@ import de.neocargo.marketplace.entity.Bid
 import de.neocargo.marketplace.entity.Bidding
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
-import de.neocargo.marketplace.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -41,6 +40,16 @@ class BiddingService(
         val bidding = biddingRepository.findBiddingById(bid.biddingId)
         bidding!!.bids.add(bid)
         return bidding
+    }
+
+    fun endBidding(userId: String, biddingId: String): Collection<Bidding> {
+        val bidding = biddingRepository.findAllBiddingsByUserId(userId)
+        if (bidding != null) {
+            for (i in bidding)
+                i.active = false
+            return bidding.filter { it.active }
+        }
+        return mutableSetOf()
     }
 
 }
