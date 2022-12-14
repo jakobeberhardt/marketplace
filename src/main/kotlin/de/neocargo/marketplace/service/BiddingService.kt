@@ -45,7 +45,7 @@ class BiddingService(
                i.bids.removeIf { k.userId != userId }
                    return biddings
     }
-}
+
 
 
     fun endBidding(userId: String, biddingId: String): Collection<Bidding> {
