@@ -58,4 +58,6 @@ class UserService(
     }
 
     fun findById(userId : String) : User = userRepository.findById(userId)
+
+    fun saveUser(user: User) : User = userRepository.save(user)
 }
