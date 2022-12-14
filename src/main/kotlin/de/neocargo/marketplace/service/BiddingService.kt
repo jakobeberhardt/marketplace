@@ -6,6 +6,7 @@ import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.function.Predicate
 
 @Service
 class BiddingService(
@@ -30,17 +31,22 @@ class BiddingService(
         return mutableSetOf()
     }
 
-    fun addBidToBidding(userId: String, bid : Bid): Bidding {
+    fun addBidToBidding(userId: String, bid : Bid): MutableSet<Bidding> {
         val user : User = userService.findById(userId)
-        val bid = Bid(userId = userId,
-            biddingId = bid.biddingId,
-            value = bid.value,
-            currency = bid.currency)
         user.bids.add(bid)
+        userService.saveUser(user)
         val bidding = biddingRepository.findBiddingById(bid.biddingId)
         bidding!!.bids.add(bid)
-        return bidding
+        biddingRepository.save(bidding)
+
+        val biddings : MutableSet<Bidding> = findAllBiddings(userId)
+        for (i in biddings)
+           for (k in i.bids)
+               i.bids.removeIf { k.userId != userId }
+                   return biddings
     }
+}
+
 
     fun endBidding(userId: String, biddingId: String): Collection<Bidding> {
         val bidding = biddingRepository.findAllBiddingsByUserId(userId)
