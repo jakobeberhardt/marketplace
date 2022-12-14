@@ -29,6 +29,9 @@ class UserService(
             updatedUser.whitelist.add(newUserId)
             userRepository.save(updatedUser)
         }
+        updatedUser.publishedBiddings.forEach {
+            addBiddingToAssignedBiddings(listOf(newUserId), it);
+        }
         return updatedUser
     }
 
@@ -37,6 +40,9 @@ class UserService(
         if (updatedUser.whitelist.contains(removeUserId)) {
             updatedUser.whitelist.remove(removeUserId)
             userRepository.save(updatedUser)
+        }
+        updatedUser.publishedBiddings.forEach {
+            deleteBiddingFromAssignedBiddings(listOf(removeUserId), it);
         }
         return updatedUser
     }
@@ -54,6 +60,14 @@ class UserService(
         query.addCriteria(Criteria.where("_id").inValues(userId))
         val update = Update()
         update.addToSet("assignedBiddings", biddingId)
+        mongoTemplate.updateMulti(query, update, User::class.java)
+    }
+
+    fun deleteBiddingFromAssignedBiddings(userId: List<String>, biddingId: String){
+        val query = Query()
+        query.addCriteria(Criteria.where("_id").inValues(userId))
+        val update = Update()
+        update.pull("assignedBiddings", biddingId)
         mongoTemplate.updateMulti(query, update, User::class.java)
     }
 
