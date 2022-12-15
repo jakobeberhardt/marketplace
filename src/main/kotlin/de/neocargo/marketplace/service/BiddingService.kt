@@ -19,8 +19,11 @@ class BiddingService(
     fun getAssignedBiddings(userId : String) : MutableSet<Bidding>{
         val user : User = userService.findById(userId)
         val assignedBiddings : MutableSet<Bidding> = mutableSetOf()
-        for (i in user.assignedBiddings)
-            assignedBiddings.add(biddingRepository.findBiddingById(i)!!)
+        for (i in user.assignedBiddings) {
+            var bidding = biddingRepository.findBiddingById(i)!!
+            bidding.bids = bidding.bids.filter { it.userId == userId }.toMutableSet()
+            assignedBiddings.add(bidding)
+        }
         return assignedBiddings
 }
     fun findAllBiddings(userId: String): MutableSet<Bidding> {
