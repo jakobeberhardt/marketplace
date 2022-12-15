@@ -7,6 +7,7 @@ import de.neocargo.marketplace.entity.Shipment
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import de.neocargo.marketplace.repository.UserRepository
+import de.neocargo.marketplace.security.dto.BidDTO
 import de.neocargo.marketplace.service.BiddingService
 import de.neocargo.marketplace.service.UserService
 import mu.KotlinLogging
@@ -84,7 +85,7 @@ class BiddingController(
 
     @PostMapping("/bid")
     @PreAuthorize("#user.id != null")
-    fun addBidToBidding(@AuthenticationPrincipal user: User, @RequestBody bid: Bid) : ResponseEntity<MutableSet<Bidding>> {
+    fun addBidToBidding(@AuthenticationPrincipal user: User, @RequestBody bid: BidDTO) : ResponseEntity<Bidding> {
         val bidding = biddingService.addBidToBidding(user.id.toString(), bid)
         val responseEntity = ResponseEntity(bidding, responseHeaders, HttpStatus.CREATED)
         logger.info(responseEntity.statusCode.toString())
