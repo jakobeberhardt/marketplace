@@ -26,12 +26,9 @@ class BiddingService(
         }
         return assignedBiddings
 }
-    fun findAllBiddings(userId: String): MutableSet<Bidding> {
-        val biddings = biddingRepository.findAllBiddingsByUserId(userId)
-        if (!biddings.isNullOrEmpty()) {
-            return biddings
-        }
-        return mutableSetOf()
+    fun findAllBiddings(userId: String): MutableSet<Bidding>? {
+        return biddingRepository.findAllBiddingsByUserId(userId)?.filter { it.active }?.toMutableSet()
+
     }
 
     fun addBidToBidding(userId: String, bidDto: BidDTO): Bidding? {
