@@ -49,15 +49,12 @@ class BiddingService(
 
 
 
-    fun endBidding(userId: String, biddingId: String): Collection<Bidding> {
-        val bidding = biddingRepository.findAllBiddingsByUserId(userId)
+    fun endBidding(userId: String, biddingId: String): Bidding? {
+        val bidding = biddingRepository.findBiddingById(biddingId)
         if (bidding != null) {
-            for (i in bidding)
-                i.active = false
-            return bidding.filter { it.active }
+                bidding.active = false
         }
-        return mutableSetOf()
+        return bidding
     }
-
 }
 
