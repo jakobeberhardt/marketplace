@@ -50,6 +50,7 @@ class BiddingService(
         val bidding = biddingRepository.findBiddingById(biddingId)
         if (bidding != null) {
                 bidding.active = false
+                biddingRepository.save(bidding)
         }
         return bidding
     }
