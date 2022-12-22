@@ -41,4 +41,6 @@ out/
 .fleet/
 
 ### local dev keys ###
-access-refresh-token-keys
+**/application-dev.yml
+**/application-prod.yml
+

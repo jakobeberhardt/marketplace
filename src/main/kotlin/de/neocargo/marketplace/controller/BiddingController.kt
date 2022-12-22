@@ -38,9 +38,8 @@ class BiddingController(
     private val biddingService: BiddingService,
     @Autowired
     private val userRepository: UserRepository,
-    @Autowired
-    private val responseHeaders: HttpHeaders,
 ) {
+    val responseHeaders = HttpHeaders()
     @PostMapping
     @PreAuthorize("#user.id != null")
     fun createBidding(@AuthenticationPrincipal user: User, @RequestBody request: Shipment): ResponseEntity<Bidding> {

@@ -22,9 +22,8 @@ private val logger = KotlinLogging.logger { }
 class UserController(
     @Autowired
     private val userService: UserService,
-    @Autowired
-    private val responseHeaders: HttpHeaders
 ) {
+    val responseHeaders = HttpHeaders()
     @GetMapping("/")
     @PreAuthorize("#user.id != null")
     fun getWhitelist(@AuthenticationPrincipal user: User): ResponseEntity<WhitelistDTO> {
