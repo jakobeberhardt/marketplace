@@ -6,6 +6,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+import org.springframework.security.config.Customizer
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer
+import org.springframework.security.config.http.SessionCreationPolicy
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -19,16 +22,27 @@ class WebSecurity {
         }
     }
 
+
     @Bean
-    fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .oauth2Login()
-        // Disable CORS
-        http.cors()
-        // Disable csrf
-        http.csrf().disable()
+    @Throws(Exception::class)
+    fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http
+            .authorizeHttpRequests(
+                Customizer { authorize ->
+                    authorize
+                        .anyRequest().authenticated()
+                        .and()
+                        .oauth2Login()
+                }
+            )
+            .csrf().disable()
+            .httpBasic().disable()
+            .sessionManagement { session: SessionManagementConfigurer<HttpSecurity?> ->
+                session.sessionCreationPolicy(
+                    SessionCreationPolicy.STATELESS
+                )
+            }
+            .cors()
         return http.build()
     }
 
