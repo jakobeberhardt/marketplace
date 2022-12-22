@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.spring") version "1.6.21"
     id("org.sonarqube") version "3.4.0.2513"
     // Causes error in Doker build
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    //id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 }
 
 group = "de.neocargo"
