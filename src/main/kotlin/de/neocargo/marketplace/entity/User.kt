@@ -1,20 +1,12 @@
 package de.neocargo.marketplace.entity
 
-import de.neocargo.marketplace.security.dto.UserDTO
-import lombok.Data
-import lombok.NoArgsConstructor
-import lombok.RequiredArgsConstructor
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Document
-@Data
-@RequiredArgsConstructor
-@NoArgsConstructor
 data class User(
     var whitelist: MutableList<String> = mutableListOf(),
     var publishedBiddings : MutableSet<String> = mutableSetOf(),

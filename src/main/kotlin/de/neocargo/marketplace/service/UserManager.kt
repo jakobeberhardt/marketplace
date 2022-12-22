@@ -1,11 +1,9 @@
 package de.neocargo.marketplace.service
 
-import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.UserDetailsManager
 import org.springframework.stereotype.Service
 
@@ -13,13 +11,8 @@ import org.springframework.stereotype.Service
 class UserManager (
     @Autowired
     private val userRepository: UserRepository,
-    @Autowired
-    val passwordEncoder: PasswordEncoder
 ) : UserDetailsManager {
-    override fun createUser(user: UserDetails){
-        (user as User).setPassword(passwordEncoder.encode(user.password))
-        userRepository.save(user)
-    }
+    override fun createUser(user: UserDetails){}
 
     override fun updateUser(user: UserDetails) {}
     override fun deleteUser(username: String) {}
