@@ -25,6 +25,10 @@ class WebSecurity {
             .anyRequest().authenticated()
             .and()
             .oauth2Login()
+        // Disable CORS
+        http.cors()
+        // Disable csrf
+        http.csrf().disable()
         return http.build()
     }
 
