@@ -12,6 +12,7 @@ import java.util.UUID
     "userId",
     "shipment",
     "bids",
+    "status"
 )
 @Document(collection = "biddings")
 data class Bidding(
@@ -43,7 +44,7 @@ data class Bidding(
     var bids: MutableSet<Bid> = mutableSetOf(),
 
     @field:Schema(
-        description = "active",
-        type = "Boolean")
-    var active : Boolean = true,
+        description = "Status",
+        type = "EStatus")
+    var status : Status = Status.ACTIVE
 )

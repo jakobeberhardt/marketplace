@@ -39,7 +39,6 @@ class BiddingController(
     @Autowired
     private val userRepository: UserRepository,
 ) {
-    val responseHeaders = HttpHeaders()
     @PostMapping
     @PreAuthorize("#user.id != null")
     fun createBidding(@AuthenticationPrincipal user: User, @RequestBody request: Shipment): ResponseEntity<Bidding> {
@@ -66,7 +65,7 @@ class BiddingController(
     @PreAuthorize("#user.id != null")
     fun findAllBiddingsByUserId(@AuthenticationPrincipal user: User): ResponseEntity<MutableSet<Bidding>> {
         val biddings = biddingService.findAllBiddings(user.id.toString())
-        val responseEntity = ResponseEntity(biddings, responseHeaders, HttpStatus.OK)
+        val responseEntity = ResponseEntity(biddings, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -76,7 +75,7 @@ class BiddingController(
     @PreAuthorize("#user.id != null")
     fun getAssignedBiddings(@AuthenticationPrincipal user: User) : ResponseEntity<MutableSet<Bidding>> {
         val assignedBiddings = biddingService.getAssignedBiddings(user.id.toString())
-        val responseEntity = ResponseEntity(assignedBiddings, responseHeaders, HttpStatus.OK)
+        val responseEntity = ResponseEntity(assignedBiddings, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -86,7 +85,7 @@ class BiddingController(
     @PreAuthorize("#user.id != null")
     fun addBidToBidding(@AuthenticationPrincipal user: User, @RequestBody bid: BidDTO) : ResponseEntity<Bidding> {
         val bidding = biddingService.addBidToBidding(user.id.toString(), bid)
-        val responseEntity = ResponseEntity(bidding, responseHeaders, HttpStatus.CREATED)
+        val responseEntity = ResponseEntity(bidding, HttpStatus.CREATED)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -97,7 +96,7 @@ class BiddingController(
     @PreAuthorize("#user.id != null")
     fun endBidding(@AuthenticationPrincipal user: User, @RequestBody bid: Bid) : ResponseEntity<String> {
         val bidding = biddingService.endBidding(user.id.toString(), bid.biddingId)
-        val responseEntity = ResponseEntity(bidding?.id, responseHeaders, HttpStatus.OK)
+        val responseEntity = ResponseEntity(bidding?.id, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity

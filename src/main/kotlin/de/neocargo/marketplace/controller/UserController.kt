@@ -23,12 +23,11 @@ class UserController(
     @Autowired
     private val userService: UserService,
 ) {
-    val responseHeaders = HttpHeaders()
     @GetMapping("/")
     @PreAuthorize("#user.id != null")
     fun getWhitelist(@AuthenticationPrincipal user: User): ResponseEntity<WhitelistDTO> {
         val whitelist: WhitelistDTO = WhitelistDTO(userService.getWhitelist(user.id.toString()))
-        val responseEntity = ResponseEntity(whitelist, responseHeaders, HttpStatus.OK)
+        val responseEntity = ResponseEntity(whitelist, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -39,7 +38,7 @@ class UserController(
     fun addUserToWhitelist(@AuthenticationPrincipal user: User, @RequestBody newUser: UserDTO): ResponseEntity<WhitelistDTO> {
         val updatedUser: User = userService.addUserToWhitelist(user.id.toString(), newUser.id.toString())
         val send = from(updatedUser)
-        val responseEntity = ResponseEntity(send, responseHeaders, HttpStatus.OK)
+        val responseEntity = ResponseEntity(send, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity
@@ -50,7 +49,7 @@ class UserController(
     fun deleteUserFromWhitelist(@AuthenticationPrincipal user: User, @RequestBody removeUser: UserDTO): ResponseEntity<WhitelistDTO> {
         val updatedUser: User = userService.deleteUserFromWhitelist(user.id.toString(), removeUser.id.toString())
         val send = from(updatedUser)
-        val responseEntity = ResponseEntity(send, responseHeaders, HttpStatus.OK)
+        val responseEntity = ResponseEntity(send, HttpStatus.OK)
         logger.info(responseEntity.statusCode.toString())
         logger.debug(responseEntity.toString())
         return responseEntity

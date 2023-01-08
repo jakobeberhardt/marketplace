@@ -2,6 +2,7 @@ package de.neocargo.marketplace.service
 
 import de.neocargo.marketplace.entity.Bid
 import de.neocargo.marketplace.entity.Bidding
+import de.neocargo.marketplace.entity.Status
 import de.neocargo.marketplace.entity.User
 import de.neocargo.marketplace.repository.BiddingRepository
 import de.neocargo.marketplace.security.dto.BidDTO
@@ -27,8 +28,12 @@ class BiddingService(
         return assignedBiddings
 }
     fun findAllBiddings(userId: String): MutableSet<Bidding>? {
-        return biddingRepository.findAllBiddingsByUserId(userId)?.filter { it.active }?.toMutableSet()
+        return biddingRepository.findAllBiddingsByUserId(userId)
 
+    }
+
+    fun findAllActiveBiddings(userId: String): MutableSet<Bidding>? {
+        return biddingRepository.findAllBiddingsByUserId(userId)?.filter { it.status.equals(Status.ACTIVE) }?.toMutableSet()
     }
 
     fun addBidToBidding(userId: String, bidDto: BidDTO): Bidding? {
@@ -49,7 +54,7 @@ class BiddingService(
     fun endBidding(userId: String, biddingId: String): Bidding? {
         val bidding = biddingRepository.findBiddingById(biddingId)
         if (bidding != null) {
-                bidding.active = false
+                bidding.status = Status.FINISHED
                 biddingRepository.save(bidding)
         }
         return bidding

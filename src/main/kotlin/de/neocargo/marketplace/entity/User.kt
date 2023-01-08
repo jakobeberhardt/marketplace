@@ -14,7 +14,7 @@ data class User(
     var bids : MutableSet<Bid> = mutableSetOf()
 ) : UserDetails {
     @Id
-    var id: String? = null
+    var id: String? = (Random().nextInt(900000) + 100000).toString()
     private var username: String? = null
     private var password: String? = null
 
