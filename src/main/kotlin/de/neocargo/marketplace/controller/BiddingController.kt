@@ -1,13 +1,11 @@
 package de.neocargo.marketplace.controller
 
 import de.neocargo.marketplace.config.Router
-import de.neocargo.marketplace.entity.Bid
-import de.neocargo.marketplace.entity.Bidding
-import de.neocargo.marketplace.entity.Shipment
-import de.neocargo.marketplace.entity.User
+import de.neocargo.marketplace.entity.*
 import de.neocargo.marketplace.repository.BiddingRepository
 import de.neocargo.marketplace.repository.UserRepository
 import de.neocargo.marketplace.security.dto.BidDTO
+import de.neocargo.marketplace.security.dto.ChangeStatusDTO
 import de.neocargo.marketplace.service.BiddingService
 import de.neocargo.marketplace.service.UserService
 import mu.KotlinLogging
@@ -17,12 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 private val logger = KotlinLogging.logger { }
 
@@ -94,6 +87,7 @@ class BiddingController(
 
     }
 
+    // TODO: No userId check in Service class. Possibly harmful code.
     @PostMapping("/assignBidding")
     @PreAuthorize("#user.id != null")
     fun endBidding(@AuthenticationPrincipal user: User, @RequestBody bid: Bid) : ResponseEntity<String> {
@@ -103,4 +97,32 @@ class BiddingController(
         logger.debug(responseEntity.toString())
         return responseEntity
     }
+
+    @GetMapping("/{status}/")
+    @PreAuthorize("#user.id != null")
+    fun getActiveBiddings(@AuthenticationPrincipal user: User, @PathVariable("status") status: String) : ResponseEntity<MutableSet<Bidding>> {
+        if (Status.from(status) == null) {
+            return ResponseEntity(mutableSetOf(), responseHeaders, HttpStatus.NOT_ACCEPTABLE)
+            }
+
+        val biddingsOfStatus = biddingService.findAllBiddingsByStatus(user.id.toString(), Status.from(status)!!)
+        val responseEntity = ResponseEntity(biddingsOfStatus, responseHeaders, HttpStatus.OK)
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
+        return responseEntity
+    }
+
+    @PutMapping("/status")
+    @PreAuthorize("#user.id != null")
+    fun changeStatus(@AuthenticationPrincipal user: User, @RequestBody alteredBidding: ChangeStatusDTO) : ResponseEntity<Bidding>? {
+        if (Status.from(alteredBidding.newStatus) == null) {
+            return ResponseEntity(null, responseHeaders, HttpStatus.NOT_ACCEPTABLE)
+        }
+        val bidding = biddingService.changeStatus(user.id.toString(), alteredBidding.biddingId, Status.from(alteredBidding.newStatus)!!)
+        val responseEntity = ResponseEntity(bidding, responseHeaders, HttpStatus.OK)
+        logger.info(responseEntity.statusCode.toString())
+        logger.debug(responseEntity.toString())
+        return responseEntity
+    }
+
 }

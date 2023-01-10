@@ -37,7 +37,8 @@ class AuthController(
     private val refreshTokenAuthProvider: JwtAuthenticationProvider,
 ) {
     @PostMapping("/register")
-    fun register(@RequestBody signupDTO: SignupDTO): ResponseEntity<TokenDTO> {
+    fun register(@RequestBody signupDTO: SignupDTO): ResponseEntity<TokenDTO>? {
+        // TODO: Should check for duplicates
         val user = User()
         user.setUsername(signupDTO.username)
         user.setPassword(signupDTO.password)

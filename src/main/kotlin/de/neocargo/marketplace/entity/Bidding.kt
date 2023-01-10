@@ -44,6 +44,6 @@ data class Bidding(
 
     @field:Schema(
         description = "active",
-        type = "Boolean")
-    var active : Boolean = true,
+        type = "EStatus")
+    var status : Status = Status.ACTIVE,
 )

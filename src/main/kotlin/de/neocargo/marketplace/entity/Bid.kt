@@ -11,6 +11,8 @@ import java.util.UUID
     "userId",
     "value",
     "currency",
+    "status",
+    "accepted",
 )
 @Document(collection = "bids")
 data class Bid(
@@ -20,5 +22,6 @@ data class Bid(
     val userId: String,
     val value: Long,
     val currency: String,
-
+    var status: Status = Status.ACTIVE,
+    var accepted: Boolean = false
     )
